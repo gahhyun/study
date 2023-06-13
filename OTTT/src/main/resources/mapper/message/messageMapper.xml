@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.ottt.ottt.dao.message.MessageMapper">
+ 	
+ 	<!-- 메시지 내용 불러오기 -->
+ 	<select id="selectMsg" parameterType="Integer" resultType="MessageDTO">
+		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
+		FROM tb_message
+		WHERE message_no = #{message_no}
+ 	</select>
+ 	
+ 	<!-- 받은 메시지 리스트 불러오기 -->
+ 	<select id="selectRecv" parameterType="Integer" resultType="MessageDTO">
+		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
+		FROM tb_message
+		WHERE receive_user_no = #{receive_user_no}
+		ORDER BY message_no DESC
+ 	</select>
+ 	
+ 	<!-- 보낸 메시지 리스트 불러오기 -->
+ 	<select id="selectSend" parameterType="Integer" resultType="MessageDTO">
+		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
+		FROM tb_message a
+		WHERE send_user_no = #{send_user_no}
+		ORDER BY message_no DESC
+ 	</select>
+ 	
+ 	<!-- 메시지 보내기 -->
+ 	<insert id="insertMsg" parameterType="MessageDTO">
+ 		INSERT INTO tb_message
+		(send_user_no, receive_user_no, content)
+		VALUES(#{send_user_no}, #{receive_user_no}, #{content})
+ 	</insert>
+
+ 	<!-- 선택한 메시지 삭제하기 -->
+ 	<delete id="deleteMsg" parameterType="map">
+		DELETE FROM tb_message
+		WHERE message_no = #{message_no}
+ 	</delete>
+
+	<!-- 전체 메시지 삭제하기 -->
+ 	<delete id="deleteMsgAll" parameterType="String">
+		DELETE FROM tb_message
+		WHERE receive_user_no = #{receive_user_no}
+ 	</delete>
+ 	
+ 	<!-- 메시지 개수? 100/100 초과 쪽지 쌓이면 자동 삭제 -->
+ 	<!-- 안 읽은 메세지 남아있나 알림(쪽지함 위에 빨간 동그라미) -->
+ 	
+ </mapper>

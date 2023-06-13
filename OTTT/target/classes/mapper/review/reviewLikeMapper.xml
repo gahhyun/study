@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ottt.ottt.dao.review.reviewLikeMapper">
+  
+  <select id="findLike" resultType="int" parameterType="map">
+  	SELECT COUNT(*) FROM tb_review_like WHERE review_no = #{review_no} AND user_no = #{user_no}
+  </select>
+  
+  
+  
+	<select id="getLike" resultType="int">
+	  SELECT COUNT(review_no) FROM tb_review_like
+	</select>
+	
+	<insert id="likeUp" parameterType="map">
+  	INSERT INTO tb_review_like (review_no, user_no)
+  	VALUES (#{review_no}, #{user_no})
+ 	 </insert>
+  <delete id="likeDown" parameterType="map">
+ 	DELETE FROM tb_review_like
+  	WHERE review_no = #{review_no} AND user_no = #{user_no}
+	</delete>
+  
+  </mapper>
+  
+  
+  <!--UserDao.getUser((review_like.getUser_no))-->

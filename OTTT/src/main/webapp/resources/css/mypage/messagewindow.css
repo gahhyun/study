@@ -1,0 +1,135 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+*{margin: 0;padding: 0;font-family: 'Noto Sans KR', sans-serif;}
+
+a{text-decoration: none;color: inherit;display: block;}
+
+ul,li,ol{list-style: none;}
+
+body{background-color: #202020;color: #fff;}
+
+.wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* header{ width: 1200px; height: 130px;box-sizing: border-box;margin: 0 auto;position: relative;display: flex;} */
+
+.sec01 {
+    width: 460px;
+    height: 80px;
+    border: 2px solid #33ff33;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.sec02 {
+    width: 460px;
+    height: 520px;
+    border-left: 2px solid #33ff33;
+    border-right: 2px solid #33ff33;
+}
+
+.sec03 {
+    width: 460px;
+    height: 80px;
+    border: 2px solid #33ff33;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    position: relative;
+    top: 3px;
+    left: 15px;
+    float: left;
+}
+
+textarea {
+    width: 400px;
+    height: 480px;
+    border: none;
+    resize: none;
+    border-radius: 10px;
+    padding: 10px 15px 10px 15px;
+    background-color:#0c0808;
+    color:white;
+    outline: none;
+    font-weight: 300;
+    margin-top: 15px;
+  }
+
+.write {
+    position: relative;
+    top: 50%;
+    left: 6%;
+    transform: translate(0, -50%);
+  }
+
+.push-alarm{
+    width: 640px;
+    height: 100%;
+    font-size: 23px;
+    margin-top: 17px;
+}
+
+.push-alarm p{
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+}
+
+.nickname {
+    font-size: 20px;
+    font-weight: 500;
+    float: left;
+    margin-left: 25px;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+input {
+    background-color: #33ff33;
+    border: 3px;
+    width: 60px;
+    height: 40px;
+    border-radius: 10px;
+    position: relative;
+    top: 50%;
+    left: 43%;
+    transform: translate(0, -50%);
+    font-weight: 600;
+}
+
+textarea::-webkit-scrollbar {
+    width: 5px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: #8f8f8f;
+    border-radius: 10px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.count{
+	width: 400px;
+	height: auto;
+	font-size: 14px;
+	text-align: right;
+	color: #7d7d7d;
+}
+
