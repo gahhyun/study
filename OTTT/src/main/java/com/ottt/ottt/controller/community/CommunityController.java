@@ -188,6 +188,7 @@ public class CommunityController {
         		logger.info(">>>>>> 업로드 파일 이름은? "+articleDTO.getUpFile().getOriginalFilename());
 
         		articleDTO.setArticle_image_name(articleDTO.getUpFile().getOriginalFilename());
+        		articleDTO.setFileDeleteYn("N");
         		
         	}
         	

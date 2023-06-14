@@ -23,6 +23,7 @@ public class ArticleDTO {
 	private String article_image_name;
 	private String image;
 	private String	writer_chk;
+	private String fileDeleteYn;
 	
 	public String getWriter_chk() {
 		return writer_chk;
@@ -171,6 +172,14 @@ public class ArticleDTO {
 	
 	public String getImage() {
 		return image;
+	}
+
+	public String getFileDeleteYn() {
+		return fileDeleteYn;
+	}
+
+	public void setFileDeleteYn(String fileDeleteYn) {
+		this.fileDeleteYn = fileDeleteYn;
 	}
 
 	public void setImage(String image) {

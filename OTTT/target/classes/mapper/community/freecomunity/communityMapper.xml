@@ -171,6 +171,10 @@
 				, article_image = #{article_image}
 				, article_image_name = #{article_image_name}
 			</if>
+			<if test = ' fileDeleteYn == "Y" ' >
+				, article_image = null
+				, article_image_name = null
+			</if>
 			, article_mod_dt = now()
 		WHERE article_no = #{article_no} 
 		AND user_no = #{user_no}

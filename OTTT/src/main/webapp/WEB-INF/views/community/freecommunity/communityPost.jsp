@@ -88,13 +88,13 @@
 					         		<input type="hidden" name="user_no" value="${articleDTO.user_no}"/>
 									<!--  ${mode == "view" ? "readonly='readonly" : ""}  -->
 									<!-- 보기모드일때 textarea에  readonly="readonly"를 넣고 수정모드일때는 지운다. -->
-             					<c:choose>
-									<c:when test="${mode == 'view' }">		
-										<p>${articleDTO.article_content }</p>
-									</c:when>
-									<c:otherwise>
-       									<textarea class="writeHere" rows="10"	placeholder="Write Here" id="article_content" name="article_content"   onkeydown="resize(this)" onkeyup="resize(this)" name="article_content" > ${articleDTO.article_content } </textarea>
-									</c:otherwise>
+             						<c:choose>
+										<c:when test="${mode == 'view' }">		
+											<p>${articleDTO.article_content }</p>
+										</c:when>
+										<c:otherwise>
+       										<textarea class="writeHere" rows="10"	placeholder="Write Here" id="article_content" name="article_content"   onkeydown="resize(this)" onkeyup="resize(this)" name="article_content" > ${articleDTO.article_content } </textarea>
+										</c:otherwise>
 									</c:choose>
              					</div>
              					<c:choose>
@@ -106,11 +106,21 @@
 										</c:if>
 									</c:when>
 									<c:otherwise>
-										<c:if test="${articleDTO.article_image != null}">
-											<div  class="container" style="margin-left: 70px">
-					                  			<img src="data:image/png;base64,${articleDTO.article_image}" id="preview" style="border-radius: 5px;"/>
-					                  		</div>
-				                  		</c:if>
+										<c:choose>
+											<c:when test="${articleDTO.article_image != null}">
+												<div  class="container" style="margin-left: 70px;">
+		                  							<img src="data:image/png;base64,${articleDTO.article_image}" id="preview" style="border-radius: 5px;"/>
+			                  					</div>
+											</c:when>
+			                  				<c:otherwise>
+												<div  class="container" style="margin-left: 70px; display: none">
+	                  								<img src="" id="preview" style="border-radius: 5px;"/>
+	                  							</div>
+			                  				</c:otherwise>
+										</c:choose>
+										<div>
+											<button type="button" onclick="javascript:fnFileDelete('Y');">이미지 삭제</button>
+										</div>
 										<div>
 											<div class="inImg">
 												<input id="fileInput" name="upFile"	 accept="image/*" type="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
@@ -299,6 +309,7 @@
 					$("#userfile").val(filename);
 
 			     	fnReadImage($(this)[0]); //미리보기
+		   			$(".container").show();
 
 				}); 
 				
@@ -697,7 +708,26 @@
 	              }
 
 	              return Math.floor(betweenTimeDay / 365)+"년전";
-	       }
+       		}
+	         
+	   		function fnFileDelete(type){
+
+				// form 요소의 참조를 가져옵니다.
+  				var form = document.getElementById("updateForm");
+  				
+	   			// hidden input 요소를 생성합니다.
+	   			var hiddenInput = document.createElement('input');
+	   			hiddenInput.type = "hidden";
+	   			hiddenInput.name = "fileDeleteYn"; // hidden 필드의 이름을 지정합니다.
+	   			hiddenInput.value = "Y"; // hidden 필드의 값을 지정합니다.
+
+  				// form에 hidden input을 추가합니다.
+   				form.appendChild(hiddenInput);
+	
+	   			$("#userfile").val("");			//파일명 없애기	   			
+	   			$("#preview").attr("src","");	//이미지 없애기
+	   			$(".container").hide();
+	   		}
 			
     	</script>
 	</body>

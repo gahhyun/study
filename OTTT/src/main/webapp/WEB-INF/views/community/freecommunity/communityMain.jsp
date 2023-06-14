@@ -364,7 +364,7 @@
 						}
 						createHtml +=		'<div style="width: 900px;">';
 						let formattedContent = v.article_content.replace(/\n/gi, "<br/>"); 
-						createHtml +=			'<a href="'+ URL + v.article_no +'" class="main_article" >'+ formattedContent +'</a>';
+						createHtml +=			'<a href="'+ URL + v.article_no +'" class="main_article" >'+ formattedContent +'</a><br>';
 						//이미지의 데이터가 있으면 태그를 생성
 						if(v.article_image+"" != "" && v.article_image != null){
 							createHtml +=		'<a href="'+ URL + v.article_no +'" class="main_article"><img style="width:400px; height:400px; border-radius: 5px; margin-bottom: 25px; object-fit: cover;" src="data:image/png;base64, '+v.article_image+'" alt="이미지"></a>';
