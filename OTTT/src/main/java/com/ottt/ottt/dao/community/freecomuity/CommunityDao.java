@@ -5,6 +5,7 @@ import java.util.List;
 import com.ottt.ottt.dto.ArticleDTO;
 import com.ottt.ottt.dto.ArticleLikeDTO;
 import com.ottt.ottt.dto.ArticleSearchDTO;
+import com.ottt.ottt.dto.ReportDTO;
 
 public interface CommunityDao {
 	
@@ -34,5 +35,8 @@ public interface CommunityDao {
 
 	//좋아요 삭제
 	int deleteLike(ArticleLikeDTO dto) throws Exception;
+
+	//신고하기 저장
+	int insertReport(ReportDTO dto) throws Exception;
 	
 }

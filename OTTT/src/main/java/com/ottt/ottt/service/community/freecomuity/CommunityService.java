@@ -5,6 +5,7 @@ import java.util.List;
 import com.ottt.ottt.dto.ArticleDTO;
 import com.ottt.ottt.dto.ArticleLikeDTO;
 import com.ottt.ottt.dto.ArticleSearchDTO;
+import com.ottt.ottt.dto.ReportDTO;
 
 public interface CommunityService {
 	
@@ -56,5 +57,11 @@ public interface CommunityService {
 	 * 좋아요를 삭제
 	 */
 	int deleteLike(ArticleLikeDTO dto) throws Exception;
+	
+	/**
+	 * 신고하기 저장
+	 */
+	int insertReport(ReportDTO dto) throws Exception;
+
 }
 

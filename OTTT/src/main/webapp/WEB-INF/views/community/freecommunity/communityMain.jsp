@@ -126,6 +126,21 @@
          		</div>
         	</div>
         	<div id="loading" class="loading"></div>
+        	
+	        	<div class="modal fade" id="postMainModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	          		<div class="modal-dialog modal-dialog-centered">
+	            		<div class="modal-content">
+		              		<div class="modal-header">
+		                		<h1 class="modal-title fs-5" id="exampleModalLabel">알림</h1>
+		                		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		              		</div>
+		              		<div class="modal-body body"></div>
+		              		<div class="modal-footer">
+		                		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+		              		</div>
+		            	</div>
+		          	</div>
+	        	</div>
     	</div>
 	    <script>
 	    
@@ -329,7 +344,6 @@
 					//화살표 함수형 foreach 반복문
 					list.forEach( function(v,i) {
 						INDEX ++;
-						console.log("INDEX : "+INDEX);
 						//등록일 날짜형식 변경 timestamp to yyyy_MM-dd
 						let date = new Date(v.article_create_dt);
 						let formattedDate = date.toISOString().slice(0, 10);
@@ -353,10 +367,10 @@
 							createHtml +=				'<div>';	
 							createHtml +=					'<button type="button" class="btn_warning" data-bs-toggle="dropdown" >신고</button>';
 							createHtml +=					'<ul class="dropdown-menu" >';
-							createHtml +=						'<li><a class="dropdown-item" href="#">욕설/비방</a></li>';
-							createHtml +=						'<li><a class="dropdown-item" href="#">광고/도배</a></li>';
-							createHtml +=						'<li><a class="dropdown-item" href="#">악의적인 스포</a></li>';
-							createHtml +=						'<li><a class="dropdown-item" href="#">선정성</a></li>';
+							createHtml +=						'<li><a class="dropdown-item"  onclick="fnInsertReport('+v.article_no+','+v.user_no+',1)"  >욕설/비방</a></li>';
+							createHtml +=						'<li><a class="dropdown-item"  onclick="fnInsertReport('+v.article_no+','+v.user_no+',2)"  >광고/도배</a></li>';
+							createHtml +=						'<li><a class="dropdown-item"  onclick="fnInsertReport('+v.article_no+','+v.user_no+',3)"  >악의적인 스포</a></li>';
+							createHtml +=						'<li><a class="dropdown-item"  onclick="fnInsertReport('+v.article_no+','+v.user_no+',4)"  >선정성</a></li>';
 							createHtml +=					'</ul>';                   
 							createHtml +=				'</div>';
 							createHtml +=			'</div>';
@@ -524,6 +538,47 @@
 				    }
 				)	
 			}
+
+	   		/**
+	   		*	신고하기
+	   		*	@param article_no 
+	   		*	@param target_user_no
+	   		*	@param report_type 
+	   		*/
+	   		function fnInsertReport(article_no,  target_user_no, report_type){
+
+				if(LOGIN_YN == null || LOGIN_YN == ""){
+					swal("로그인 후 이용가능합니다.","로그인을 해주세요.", "warning")
+					.then(function(){
+						location.href="/ottt/login";                   
+					});
+					return;					
+				}
+	   			
+	   			let data = {
+	   				"article_no" : article_no
+	   				, "target_user_no" : target_user_no
+	   				, "report_type" : report_type
+	   			}
+	   			
+	   			$.post(
+	   				//PATH는? /otttt 임
+   					PATH+"/community/ajax/insertReport"
+	   				, data 
+	   				, function(response){
+						console.log("신고저장 ajax 통신결과");
+	   					console.log(response);		
+	   					if(response.result > 0){
+	   						$(".body").html(response.message);
+	   			   	    	$("#postMainModal").modal("show");
+	   					}else {
+	   						$(".body").html(response.message)
+	   		   	    		$("#postMainModal").modal("show");					
+	   					}								
+   					}
+   				);		
+	   			
+	   		}
 			
 		</script>
 	</body>

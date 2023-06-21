@@ -1,0 +1,109 @@
+<c:set var="user_no" value="${sessionScope.user_no}" />
+<c:set var="user_img" value="${sessionScope.user_img}" />
+
+
+<div>
+<!-- 입력 폼 -->
+<form id="insertForm" class="frm" method="post" enctype="multipart/form-data" action="<c:url value='/community/freecommunity'/>">  
+    <ul class="post_write">
+
+        <c:choose>
+
+            <c:when test="${user_no == null || user_no == ''}">
+                <li>
+                    <div>로그인이 필요합니다</div>
+                </li>
+            </c:when>
+
+            <c:otherwise>
+                <li>
+                    <img src="${user_img }" alt="프로필사진">
+                </li>
+                <li>
+                    <textarea class="writeHere" placeholder="Write Here" onkeydown="resize(this)" onkeyup="resize(this)" id="article_content" name="article_content" ></textarea>
+                </li>
+                <li style="margin-left: 70px">
+                    <img src="" id="preview" style="border-radius: 5px;"/>
+                </li>
+            </c:otherwise>
+
+        </c:choose>
+
+        <li class="btn_s">
+            <div class="form-group">
+                <input id="fileInput" name="upFile"   accept="image/*" type="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);" onchange="readURL(this)">
+                <input type="hidden" id="userfile" name="userfile" >
+                <label for="fileInput" for="btn_file" ><img src="${path}/resources/images/img/writeImg.png" class="img_file"></label>
+            </div>
+            <img src="${path}/resources/images/img/commit.png" alt="commit" class="btn_commit"	 data-bs-toggle="modal" data-bs-target="#commitBtn">     
+
+            <!-- Modal -->
+            <div class="modal fade" id="commitBtn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabe2">알림</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">등록하시겠습니까?</div>
+                        <div class="modal-footer">
+                            <button type="button" id="saveBtn"class="btn btn-primary">Yes</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                    </div>
+            </div>         
+        </li>
+
+    </ul>
+</form> 
+</div>
+
+
+<!-- 자바스크립트 -->
+저장버튼 Click Event (commit버튼 이미지 -> yse버튼)
+
+let LOGIN_YN = "${sessionScope.user_no}";	//로그인여부
+
+$("#saveBtn").click(function(){		        
+    if(LOGIN_YN == null || LOGIN_YN == ""){
+        swal("로그인 후 이용가능합니다.","로그인을 해주세요.", "warning")
+        .then(function(){
+            location.href="/ottt/login";                   
+        });
+        return;					
+    }
+    //자바스크립트 + 제이쿼리를 이용한 입력항목 유효성 체크
+    let value = $("#article_content").val();
+    if(value == "" || value == null){           //게시글의 내용이 없거나 빈칸일 경우
+        swal("내용을 입력해주세요.", "", "warning");
+        return;
+    }				
+     $("#insertForm").submit();		//컨트롤러로 최종 값을 전송
+});
+
+
+
+<form> 태그는 웹 페이지에서 사용자 입력을 받아 서버로 전송하기 위한 요소입니다. 
+<form> 태그는 여러 입력 필드와 제출 버튼을 포함할 수 있으며, 이러한 입력 필드의 값을 서버로 제출할 때 사용됩니다.
+위의 코드에서도 <form> 태그가 사용되고, 해당 폼은 id="insertForm"으로 식별되고 있습니다. 
+자바스크립트 코드에서 $("#insertForm").submit()을 호출하면 이 폼이 제출되며, 액션 속성에 지정된 URL로 데이터가 전송됩니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

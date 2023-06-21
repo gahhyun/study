@@ -9,6 +9,7 @@ import com.ottt.ottt.dao.community.freecomuity.CommunityDao;
 import com.ottt.ottt.dto.ArticleDTO;
 import com.ottt.ottt.dto.ArticleLikeDTO;
 import com.ottt.ottt.dto.ArticleSearchDTO;
+import com.ottt.ottt.dto.ReportDTO;
 
 @Service
 public class CommunityServiceImpl implements CommunityService{
@@ -99,4 +100,12 @@ public class CommunityServiceImpl implements CommunityService{
 	public int deleteLike(ArticleLikeDTO articleDTO) throws Exception {
 		return communityDao.deleteLike(articleDTO);
 	}
+	
+	/**
+	 * 신고하기 저장
+	 */
+	public int insertReport(ReportDTO dto) throws Exception {
+		return communityDao.insertReport(dto);
+	}
+
 }

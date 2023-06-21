@@ -23,6 +23,7 @@ import com.ottt.ottt.dao.login.LoginUserDao;
 import com.ottt.ottt.dto.ArticleDTO;
 import com.ottt.ottt.dto.ArticleLikeDTO;
 import com.ottt.ottt.dto.ArticleSearchDTO;
+import com.ottt.ottt.dto.ReportDTO;
 import com.ottt.ottt.dto.UserDTO;
 import com.ottt.ottt.service.community.freecomuity.CommunityService;
 
@@ -319,29 +320,30 @@ public class CommunityController {
 		return result;
 
 	}
-}
-
-
-
-
 	
+	//신고하기
+	@PostMapping("/ajax/insertReport")
+	@ResponseBody
+	public Map<String,Object> insertReport(ReportDTO dto, HttpSession session) throws Exception {
+		
+		logger.info(">>>>>>>>>>>>>>>>>>>>> @PostMapping /ajax/insertReport insertReport 진입 ");
+		logger.info(">>>>>>>>>>>>>>>>>>>>> ReportDTO >>>> "+dto.toString());
 
+		Map<String, Object> result = new HashMap<String,Object>();
+		
+		UserDTO userDTO = loginUserDao.select((String)session.getAttribute("id"));
 
+		if(userDTO != null) {
+			dto.setUser_no(userDTO.getUser_no());
+		}
+		
+		if(communityService.insertReport(dto) > 0) {
+			result.put("result", 1);
+			result.put("message", "신고되었습니다.");
+		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		return result;
+		
+	}
+}
 

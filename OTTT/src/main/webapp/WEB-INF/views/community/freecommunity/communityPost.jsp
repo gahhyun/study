@@ -79,6 +79,17 @@
                					<a href="#"><img class="profile" src="${articleDTO.image }" alt="profile" ></a>
                  				<a class="nickname" href="../ottt박소율/mypageshow.html">${articleDTO.user_nicknm }</a>
                				</div>
+               				<div class="btn_warning_div">
+				                    <button type="button" class="btn_warning2" data-bs-toggle="dropdown" aria-expanded="false">
+				                     신고
+				                    </button>
+				                    <ul class="dropdown-menu">
+				                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',1)"  >비방/욕설</a></li>
+				                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',2)"  >광고/도배</a></li>
+				                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',3)"  >악의적인 스포</a></li>
+				                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',4)"  >선정성</a></li>
+				                    </ul>
+				                </div>
                			</div>
            				<div class="wirted">
          					<!-- 입력 폼 -->
@@ -90,13 +101,14 @@
 									<!-- 보기모드일때 textarea에  readonly="readonly"를 넣고 수정모드일때는 지운다. -->
              						<c:choose>
 										<c:when test="${mode == 'view' }">		
-											<p>${articleDTO.article_content }</p>
+											<a onclick="return false;" style="white-space: pre-wrap;" id="textP">${articleDTO.article_content }</a>
 										</c:when>
 										<c:otherwise>
        										<textarea class="writeHere" rows="10"	placeholder="Write Here" id="article_content" name="article_content"   onkeydown="resize(this)" onkeyup="resize(this)" name="article_content" > ${articleDTO.article_content } </textarea>
 										</c:otherwise>
 									</c:choose>
              					</div>
+             					<br>
              					<c:choose>
 									<c:when test="${mode == 'view' }">		
 										<c:if test="${articleDTO.article_image != null}">
@@ -277,7 +289,6 @@
 			let ARTICLE_NO = "${articleDTO.article_no}"
 			let PATH = "<c:out value='${path}'/>"; 	//이미지 root 경로
 			
-			
 			/********************************************************************************/
 			/* DOM Ready 영역																	*/
 			/* 작성자 gahhyun																	*/
@@ -323,54 +334,30 @@
 						});
 						return;					
 					}
-					
+
 					// $.post  > post 방식의 ajax 
-					$.post(
-						"/ottt/community/ajax/selectLikeCount"
-					    , {"user_no": "${user_no}" , "article_no" : "${articleDTO.article_no}" }
-					    , function(data){
+					fnCallAjax(
+						"/community/ajax/selectLikeCount"
+						, {"user_no": "${user_no}" , "article_no" : "${articleDTO.article_no}" }
+					 	, function(response){
+					 		
+					 		//통신 성공후 결과값이 출력된다.
+					    	console.log("selectLikeCount response > "+response);
 					    	
-					    	//통신 성공후 결과값이 출력된다.
-					    	console.log(data);
-					    	//data = {result: 0, message: 'success'} 오브젝트형태의 데이터임
-					    	let result = data.result // 1이나 0이 담겨있어요
-					    	
-					    	if(result == 0){
-
-					    		//저장하는 post ajax
-					    		//1. 비동기 post ajax로 저장하는 컨트롤러 호출 , 필수값 보내야함
-					    		//2. 필수값 : 아티클번호, 회원번호
-					    		//3. 주소는 이거  /ottt/community/ajax/selectLikeCount
-					    		//4. 제이쿼리의 attr을 사용하여 이미지를 on으로 변경하기
-   								$.post(
-									"/ottt/community/ajax/insertLike"
-								    , {"user_no": "${user_no}" , "article_no" : "${articleDTO.article_no}" }
-								    , function(data){
-										$("#pushHeart").attr("src", PATH+"/resources/images/img/heart_on.png");
-										$("#likeCount").text(Number($("#likeCount").text())+1);
-								    }
-							    );
-
-					    	}else {
-
-					    		//삭제하는 post ajax
-					    		//1. 비동기 post ajax로 저장하는 컨트롤러 호출 , 필수값 보내야함
-					    		//2. 필수값 : 아티클번호, 회원번호
-					    		//3. 주소는 이거  /ottt/community//ajax/deleteLike
-					    		//4. 제이쿼리의 attr을 사용하여 이미지를 off으로 변경하기
-   								$.post(
-									"/ottt/community/ajax/deleteLike"
-								    , {"user_no": "${user_no}" , "article_no" : "${articleDTO.article_no}" }
-								    , function(data){
-   										$("#pushHeart").attr("src", PATH+"/resources/images/img/heart_off.png");
-   										$("#likeCount").text(Number($("#likeCount").text())-1);
-					    			}
-							    );
-					    		
-					    	}
-					    	
-					    }
-					)	
+				    		let setUrl = (response.result == 0) ? "/community/ajax/insertLike" : "/community/ajax/deleteLike";
+				    		let setImg = (response.result == 0) ? PATH+"/resources/images/img/heart_on.png" : PATH+"/resources/images/img/heart_off.png";
+				    		let setCount = (response.result == 0) ? Number($("#likeCount").text())+1 : Number($("#likeCount").text())-1;
+				    		
+							fnCallAjax(
+								setUrl
+				    			, {"user_no": "${user_no}" , "article_no" : "${articleDTO.article_no}" }
+							    , function(response){
+									$("#pushHeart").attr("src", setImg);
+									$("#likeCount").text(setCount);
+							    }
+						    )				 		
+					 	}
+					)
 					
 				});
 				
@@ -461,6 +448,75 @@
 			       	reader.readAsDataURL(input.files[0]);
 		   		}
        		}
+			
+	   		
+	   		/*********************************************************************************************************************
+	   		*	게시글 신고하기
+	   		*	@param article_no
+	   		*	@param target_user_no
+	   		*	@param report_type 
+	   		*/	   		
+	   		function fnInsertReport2(article_no,  target_user_no, report_type){
+
+				if(LOGIN_YN == null || LOGIN_YN == ""){
+					swal("로그인 후 이용가능합니다.","로그인을 해주세요.", "warning")
+					.then(function(){
+						location.href="/ottt/login";                   
+					});
+					return;					
+				}
+	   			
+	   			let data = {
+	   				"article_no" : article_no
+	   				, "target_user_no" : target_user_no
+	   				, "report_type" : report_type
+	   			}
+	   			
+	   			fnCallAjax(
+					"/community/ajax/insertReport" 
+   					, data
+	   				, function(response){
+						console.log("신고저장 ajax 통신결과");
+	   					console.log(response);		
+	   					if(response.result > 0){
+	   						$(".body").html(response.message);
+	   			   	    	$("#commentModal").modal("show");
+	   					}else {
+	   						$(".body").html(response.message)
+	   		   	    		$("#commentModal").modal("show");					
+	   					}								
+   					}
+   				);
+	   		}
+			
+
+	   		/*********************************************************************************************************************
+	   		*	게시글 수정 시 이미지 삭제
+	   		*/	         
+   		function fnFileDelete(type){
+
+			// form 요소의 참조를 가져옵니다.
+				var form = document.getElementById("updateForm");
+				
+   			// hidden input 요소를 생성합니다.
+   			var hiddenInput = document.createElement('input');
+   			hiddenInput.type = "hidden";
+   			hiddenInput.name = "fileDeleteYn"; // hidden 필드의 이름을 지정합니다.
+   			hiddenInput.value = "Y"; // hidden 필드의 값을 지정합니다.
+
+				// form에 hidden input을 추가합니다.
+				form.appendChild(hiddenInput);
+
+   			$("#userfile").val("");			//파일명 없애기	   			
+   			$("#preview").attr("src","");	//이미지 없애기
+   			$(".container").hide();
+   		}
+   		
+			
+			
+			
+			
+			
 
 			/* ============================================================
 			* 	댓글 기능 스크립트
@@ -513,10 +569,10 @@
 							createHtml +=			'<div class="btn_warning_div">';
 							createHtml +=				'<button type="button" class="btn_warning2" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #202020">신고</button>';
 							createHtml +=				'<ul class="dropdown-menu">';
-							createHtml +=					'<li><a class="dropdown-item" href="#">비방/욕설</a></li>';
-							createHtml +=					'<li><a class="dropdown-item" href="#">광고/도배</a></li>';
-							createHtml +=					'<li><a class="dropdown-item" href="#">악의적인 스포</a></li>';
-							createHtml +=					'<li><a class="dropdown-item" href="#">선정성</a></li>';
+							createHtml +=					'<li><a class="dropdown-item" onclick="fnInsertReport('+v.cmt_no+','+v.user_no+',1)" >비방/욕설</a></li>';
+							createHtml +=					'<li><a class="dropdown-item" onclick="fnInsertReport('+v.cmt_no+','+v.user_no+',2)" >광고/도배</a></li>';
+							createHtml +=					'<li><a class="dropdown-item" onclick="fnInsertReport('+v.cmt_no+','+v.user_no+',3)" >악의적인 스포</a></li>';
+							createHtml +=					'<li><a class="dropdown-item" onclick="fnInsertReport('+v.cmt_no+','+v.user_no+',4)" >선정성</a></li>';
 							createHtml +=				'</ul>';
 							createHtml +=			'</div>';
 							createHtml +=		'</div>';							
@@ -546,7 +602,7 @@
 				}
 			}
 			
-			/**
+			/******************************************************************************************************************************
 			* 댓글을 저장하는 함수
 			*/
 			function fnInsertComment(){
@@ -572,8 +628,8 @@
 
 			}
 
-			/**
-			* 댓글을 삭제하는 함수
+			/******************************************************************************************************************************
+			* 본인 댓글을 삭제하는 함수
 			* @param {String} cmt_no : 댓글번호
 			*/				
 			function fnDeleteComment(cmt_no){
@@ -581,7 +637,8 @@
 				fnCallAjax("/comment/deleteComment" ,{"cmt_no" : cmt_no}, fnSaveCallBack);
 			}
 			
-			/**
+			/*****************************************************************************************************************************
+			* 본인 댓글 수정 버튼 클릭 시
 			* 댓글을 수정모드로 바꾸는 함수
 			* @param {String} i li 위치
 			* @param {String} type 수정모드/취소모드 타입
@@ -617,7 +674,8 @@
 				}
 			}
 			
-			/**
+			/****************************************************************************************************************************
+			* 댓글 수정 완료 후 '등록' 버튼 클릭 시
 			* @param {String} cmt_no 코맨트 번호
 			* @param {String} i li 위치
 			*/
@@ -639,7 +697,7 @@
 
 			}
 			
-			/**
+			/****************************************************************************************************************************
 			* 댓글 저장/수정/삭제 요청 콜백함수
 			* @param {json} response : 컨트롤러에서 리턴받은 값
 			*/				
@@ -657,7 +715,7 @@
 				}
 			}
 			
-			/**
+			/**************************************************************************************************************************
 			* 공통 ajax 호출 함
 			* @param {String} url ajax 호출 URL
 			* @param {Object} sendData 컨트롤러로 전송하는 데이터
@@ -676,7 +734,7 @@
 			  	});				
 			}
 			
-	         /**
+	         /***********************************************************************************************************************
 	         *   날짜 계산(몇일전, 몇시간전, 몇분전)
 	         *   @param dateValue{String} 날짜
 	         */
@@ -709,26 +767,49 @@
 
 	              return Math.floor(betweenTimeDay / 365)+"년전";
        		}
+
 	         
-	   		function fnFileDelete(type){
+	   		/*********************************************************************************************************************
+	   		*	댓글 신고하기
+	   		*	@param cmt_no
+	   		*	@param target_user_no
+	   		*	@param report_type 
+	   		*/
+	   		function fnInsertReport(cmt_no, target_user_no, report_type){
 
-				// form 요소의 참조를 가져옵니다.
-  				var form = document.getElementById("updateForm");
-  				
-	   			// hidden input 요소를 생성합니다.
-	   			var hiddenInput = document.createElement('input');
-	   			hiddenInput.type = "hidden";
-	   			hiddenInput.name = "fileDeleteYn"; // hidden 필드의 이름을 지정합니다.
-	   			hiddenInput.value = "Y"; // hidden 필드의 값을 지정합니다.
-
-  				// form에 hidden input을 추가합니다.
-   				form.appendChild(hiddenInput);
-	
-	   			$("#userfile").val("");			//파일명 없애기	   			
-	   			$("#preview").attr("src","");	//이미지 없애기
-	   			$(".container").hide();
+				if(LOGIN_YN == null || LOGIN_YN == ""){
+					swal("로그인 후 이용가능합니다.","로그인을 해주세요.", "warning")
+					.then(function(){
+						location.href="/ottt/login";                   
+					});
+					return;					
+				}
+	   			
+	   			let data = {
+	   				"cmt_no" : cmt_no
+	   				, "target_user_no" : target_user_no
+	   				, "report_type" : report_type
+	   			}
+	   			
+	   			fnCallAjax(
+	   				//PATH는? /otttt 임
+   					"/community/ajax/insertReport"
+	   				, data 
+	   				, function(response){
+						console.log("신고저장 ajax 통신결과");
+	   					console.log(response);		
+	   					if(response.result > 0){
+	   						$(".body").html(response.message);
+	   			   	    	$("#commentModal").modal("show");
+	   					}else {
+	   						$(".body").html(response.message)
+	   		   	    		$("#commentModal").modal("show");					
+	   					}								
+   					}
+   				);		
 	   		}
-			
+	   		
+
     	</script>
 	</body>
 </html>

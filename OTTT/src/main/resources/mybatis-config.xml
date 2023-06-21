@@ -17,6 +17,7 @@
 		<typeAlias type="com.ottt.ottt.dto.ContentOTTDTO" alias="ContentOTTDTO"/>
 		<typeAlias type="com.ottt.ottt.dto.WishlistDTO" alias="WishlistDTO"/>
 		<typeAlias type="com.ottt.ottt.dto.ReviewDTO" alias="ReviewDTO"/>
+		<typeAlias type="com.ottt.ottt.dto.ReportDTO" alias="ReportDTO"/>		
   	</typeAliases>
   </configuration>
   

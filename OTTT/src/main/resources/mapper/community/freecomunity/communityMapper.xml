@@ -209,4 +209,32 @@
     	AND article_no = #{article_no}
 	</delete>
 
+	<!-- 신고하기 저장 -->
+	<insert id="insertReport" parameterType="ReportDTO">
+		
+		/*com.ottt.ottt.dao.CommunityMapper.insertReport 호출*/
+    	INSERT into tb_report(
+			report_type
+			<if test="article_no != null and article_no != '' ">
+				, article_no
+			</if>
+			<if test="cmt_no != null and cmt_no != '' ">
+				, cmt_no
+			</if>
+			, user_no
+			, target_user_no
+    	)
+    	VALUES(
+			#{report_type}
+			<if test="article_no != null and article_no != '' ">
+				, #{article_no}
+			</if>
+			<if test="cmt_no != null and cmt_no != '' ">
+				, #{cmt_no}
+			</if>
+			, #{user_no}
+			, #{target_user_no}
+   		)
+	</insert>
+
 </mapper>
