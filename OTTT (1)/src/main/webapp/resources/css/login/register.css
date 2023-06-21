@@ -1,0 +1,372 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+/* font-family: 'Noto Sans KR', sans-serif; */
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+ul,li,ol{
+    list-style: none;
+}
+
+body{
+    background-color: #202020;
+    color: #fff;   
+}
+
+.wrap{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* header */
+
+header{
+    width: 1200px;
+    height: 130px;
+    
+    box-sizing: border-box;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+}
+
+.logo{
+    width: 230px;
+    height : 95px;   
+    margin-top: 30px;
+}
+
+.logo > a > img{
+    margin-top: 2.5px;
+    width: 200px;
+}
+
+.gnb > ul{
+    display: flex;
+}
+
+.gnb > ul > li{
+    width: 70px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    margin-top: 30px;
+    margin-right:5px;
+}
+
+.gnb a{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.gnb > ul > li:hover{
+    color: #33ff33;
+}
+
+.h-icon{
+    width: 120px;
+    height: 58px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.h-icon > ul{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 12px;
+}
+
+/* .h-icon  img{
+    width: 50px;
+} */
+
+
+
+.h-icon > ul > li:first-child > a{
+    background:url("../../images/icon/search02.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:last-child > a{
+    background:url("../../images/icon/user01.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:first-child > a:hover{
+    background: url("../../images/icon/search-h.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:last-child > a:hover{
+    background: url("../../images/icon/user-h.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+/* main */
+
+/* section01 */
+
+
+
+
+
+.Id{
+    margin-bottom: 30px;
+    margin-top: 15px;
+}
+
+#id{
+    width: 400px;
+    height: 40px;
+    background-color: #3f3b3b;
+    display: flex;
+    color: #fff;
+    border: 2px solid gray;
+    
+}
+
+.password {
+    margin-bottom: 30px;
+    
+    
+}
+#password{
+    width: 400px;
+    height: 40px;
+    background-color: #3f3b3b;
+    display: flex;
+    color: #fff;
+
+    border: 2px solid gray;
+}
+.passwordCheck {
+    margin-bottom: 30px;
+}
+
+
+#passwordCheck{
+    width: 400px;
+    height: 40px;
+    background-color: #3f3b3b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    border: 2px solid gray;
+    
+}
+.passwordCheck input {
+    width: 45%;
+  }
+    
+#name {
+    width: 200px;
+    height: 40px;
+    background-color: #3f3b3b;
+    color: #fff;
+    border: 2px solid gray;
+}
+
+.name select {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    height: 40px;
+    background-color: #3f3b3b;
+    width: 100px;
+    color: silver;
+    border: 2px solid gray;
+  }
+
+.nname {
+    margin-top: 30px;
+}
+
+
+#nname {
+    width: 400px;
+    height: 40px;
+    background-color: #3f3b3b;
+    color: #fff;
+    border: 2px solid gray;
+}
+
+.email {
+    margin-top: 30px;
+}
+
+#email{
+    width: 180px;
+    height: 40px;
+    background-color: #3f3b3b;
+    color: #fff;
+    border: 2px solid gray;
+}
+
+
+#send-verification-code {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    width: 90px;
+    height: 40px;
+    background-color: #3f3b3b;
+    color: silver;
+    border: 2px solid gray;
+    font-size: 13px;
+}
+
+
+#send-verification-code{
+  border-width: 1px;
+}
+
+#Certification{
+    width: 300px;
+    height: 40px;
+    background-color: #3f3b3b;
+    color: #fff;
+    border: 2px solid gray;
+    
+
+}
+
+.Certification {
+    margin-top: 30px;
+}
+
+
+#completion {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    height: 40px;
+    background-color: #3f3b3b;
+    color: silver;
+    border: 2px solid gray;
+    
+}
+
+.back {
+    
+    float: left;
+    margin-right: 100px; /* 버튼 간의 간격 조절 */
+    
+  }
+
+
+  
+  .complate {
+    float: left;
+  }
+
+  .back input[type="button"],
+  .complate input[type="submit"] {
+    width: 150px; 
+    height: 70px;
+    margin-top: 120px;
+  }
+
+  .back input[type="button"] {
+    background-color:#3f3b3b;
+    border-width: 0px;
+    border-radius: 12px;
+    font-size: 25px;
+    color: #fff;
+    border: 2px solid gray;
+  }
+  
+  .complate input[type="submit"] {
+    background-color:#33ff33;
+    border-width: 1px;
+    border-radius: 12px;
+    font-size: 25px;
+    border: 2px solid gray;
+  }
+
+
+  .sec00 {
+    height: 700px;
+    width: 1200px;
+    margin: 30px auto;
+    padding: 40px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    /* border: 3px solid #33ff33; */
+  }
+
+  .gender{
+  
+  position: absolute;
+  right: 40px;
+  top: 209px;
+  
+  
+  }
+  
+  /* 중복아이디 존재하지 않는경우 */
+	.id_input_re_1{
+		color : green;
+		display : none;
+		font-size: small;
+	}
+	/* 중복아이디 존재하는 경우 */
+	.id_input_re_2{
+		color : red;
+		display : none;
+		font-size: small;
+	}
+  
+  .errorMsg {
+  color: red; 
+  font-size: small; 
+  position: absolute;
+  margin-top: 5px;
+  }
+
+  /* 중복닉네임 존재하지 않는경우 */
+	.nickname_input_re_1{
+		color : green;
+		display : none;
+		font-size: small;
+	}
+	/* 중복닉네임 존재하는 경우 */
+	.nickname_input_re_2{
+		color : red;
+		display : none;
+		font-size: small;
+	}
+    
+  

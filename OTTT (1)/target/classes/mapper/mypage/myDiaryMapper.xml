@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  
+  <mapper namespace="com.ottt.ottt.dao.mypage.MyDiaryMapper">
+  	
+  	<!-- 나의 다이어리  -->
+	<select id="myDiaryAll" parameterType="SearchItem" resultType="MyDiaryDTO">
+		SELECT a.public_yn_cd, a.content_no, a.mydiary_content, a.user_no
+		, a.mydiary_create_dt, a.mydiary_mod_dt, b.content_nm, b.thumbnail
+		FROM tb_my_diary a
+		join tb_content b
+		on a.content_no = b.content_no
+		join tb_user c
+		on a.user_no = c.user_no
+		where c.user_no = #{user_no}
+		order by a.mydiary_create_dt desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+	<select id="myDiaryCnt" parameterType="SearchItem" resultType="int">
+		SELECT count(*)
+		FROM tb_my_diary a
+		join tb_content b
+		on a.content_no = b.content_no
+		join tb_user c
+		on a.user_no = c.user_no
+		where c.user_no = #{user_no}
+	</select>
+	
+	<select id="selectDiary" parameterType="map" resultType="MyDiaryDTO">
+		SELECT a.public_yn_cd, a.content_no, a.mydiary_content, a.user_no
+		, a.mydiary_create_dt, a.mydiary_mod_dt, b.content_nm, b.thumbnail, c.user_nicknm
+		FROM tb_my_diary a
+		join tb_content b
+		on a.content_no = b.content_no
+		join tb_user c
+		on a.user_no = c.user_no
+		where c.user_no = #{user_no}
+		and a.content_no = #{content_no}
+	</select>
+	
+	<!-- 나의 다이어리 수정 -->
+	<update id="updateDiary" parameterType="MyDiaryDTO">
+		UPDATE tb_my_diary
+		SET public_yn_cd=#{public_yn_cd}, mydiary_content=#{mydiary_content}, mydiary_mod_dt=now()
+		WHERE user_no = #{user_no} AND content_no = #{content_no}
+	</update>
+	
+	<!-- 나의 다이어리 삭제 -->
+	<delete id="delete" parameterType="map">
+		delete from tb_my_diary
+		where content_no = #{content_no} and user_no = #{user_no}	
+	</delete>
+	
+	<!-- 나의 다이어리 등록 -->
+	<insert id="insert" parameterType="MyDiaryDTO">
+		INSERT INTO tb_my_diary
+		(user_no, content_no, public_yn_cd, mydiary_content)
+		VALUES(#{user_no}, #{content_no}, #{public_yn_cd}, #{mydiary_content});	
+	</insert> 
+  
+  </mapper>

@@ -1,0 +1,213 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+
+*{font-family: 'Noto Sans KR', sans-serif;}
+
+a{text-decoration: none;color: inherit;display: block;}
+
+ul,li,ol{list-style: none;}
+
+body{background-color: #202020;color: #fff;}
+
+.wrap{width: 100%;height: 100%;position: relative;}
+
+/* header Start*/
+header{ width: 1200px; height: 130px;box-sizing: border-box;margin: 0 auto;position: relative;display: flex;}
+
+.logo{    width: 230px;
+    height : 95px;   
+    margin-top: 30px;}
+
+.logo > a > img{margin-top: 2.5px;width: 200px;}
+
+.gnb > ul{display: flex;}
+
+.gnb > ul > li{
+    width: 70px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    margin-top: 30px;
+    margin-right:5px;
+}
+
+
+.gnb a{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.gnb > ul > li:hover{
+    color: #33ff33;
+}
+
+.h-icon{
+    width: 120px;
+    height: 58px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.h-icon > ul{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 12px;
+}
+
+/* .h-icon  img{
+    width: 50px;
+} */
+
+
+
+.h-icon > ul > li:first-child > a{
+    background:url("../../../images/icon/search02.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:last-child > a{
+    background:url("../../../images/img/profile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:first-child > a:hover{
+    background: url("../../../images/icon/search-h.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+/* .h-icon > ul > li:last-child > a:hover{
+    background: url("../images/user-h.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+} */
+
+/* header End */
+
+/* meun bar1 Start */
+#line-1 {
+    width: 1200px;
+    border: none;
+    border-top-style: solid;
+    border-top-color:#33ff33;
+    border-top-width:3pxw ;
+    border-bottom-width: 3px;
+    border-bottom-color: #33FF33; 
+    margin: 0 auto;
+    position: relative;
+    display: flex;  
+}
+.nav-link1{
+    color: #ffffff; 
+    font-size: 25px; 
+    padding:2px;
+    text-decoration-line: none;
+    margin-left: 140px;
+}
+.nav-link1:hover{color: #33FF33;}
+
+.nav a:nth-child(1){margin-left: 3.5vw;}
+
+/* meun bar1 ENd */
+
+/* meun bar2 Start */
+#line-2 {
+    width: 1200px;
+    border: none;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-top-color:#33ff33;
+    border-top-width:3pxw ;
+    border-bottom-width: 3px;
+    border-bottom-color: #33FF33; 
+    margin: 0 auto;
+    position: relative;
+    padding: 7px 0;
+    height : 64px;
+
+}
+.nav2{
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+    
+.nav-link2{
+    width: 50px;
+    inline-size: 50px 50px;
+}
+
+    
+.ott_icon{
+    width: 50px; 
+    margin: -3px;   
+}
+.ott_icon:hover{
+    border: 2px solid #33ff33;  
+    border-radius: 10px;
+}
+
+/*가격표------------------*/
+
+
+
+.voucher-inner-wrap {
+    width: 1200px;
+    margin: 30px auto 0;
+    text-align: center;
+    
+}
+
+.vouchar-table{
+    width: 1200px;
+    border: 1px solid #666464;
+}
+
+.price_col{
+    border: 1px solid #666464; 
+}
+
+.product-name{
+    font-size: 33px;
+}
+
+
+
+
+span{
+    font-size: 20px;
+}
+
+th {
+    padding: 28px 20px;
+    line-height: 24px;
+    font-size: 18px;  
+}
+
+.price_basic{
+    font-size:20px;
+    margin-top: 5px;
+    color: #33FF33;
+}
+.price_premium{
+    color: #33FF33;
+}
+

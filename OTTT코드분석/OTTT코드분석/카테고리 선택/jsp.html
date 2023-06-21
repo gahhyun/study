@@ -1,0 +1,35 @@
+<div class="Lcontent">
+    <input class="search" type="search" placeholder=" &nbsp;Search" id="schText" name="schText">
+    <input class="searchicon" type="image" id="schBtn"	src="${path}/resources/images/icon/search02.png" alt="돋보기">
+    <!-- <input type=“image”>는 제출 버튼(submit button)으로 사용될 이미지를 정의합니다. -->
+    <!-- 이 속성값은 텍스트가 아닌 이미지 형태로 된 제출 버튼을 생성하며, 이때 해당 이미지의 경로는 src 속성에 명시됩니다. -->
+    
+  <ul class="movepage">
+        <li style="display: flex;">
+          <div class="list-group">
+              <a href="#" class="list-group-item list-group-item-action" onclick="javascript:fnCategory('myPost');">
+                    <img class="side_img" src="${path}/resources/images/img/KakaoTalk_20230411_161709664.png" alt="post">내가 쓴 게시글
+              </a>
+          </div>
+        </li>
+        <li style="display: flex;">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action" onclick="javascript:fnCategory('myLike');">
+                  <img class="side_img" src="${path}/resources/images/img/heart_on.png" alt="heart">좋아요 누른 게시글
+                </a>
+            </div>
+        </li>
+        <li style="display: flex;">
+            <div class="list-group">
+               <a href="#" class="list-group-item list-group-item-action" onclick="javascript:fnCategory('myComment');">
+                     <img class="side_img" src="${path}/resources/images/img/comment.png" >댓글 작성 게시물
+                </a>
+           </div>
+       </li>
+        <li style="display: flex;">
+           <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action" style="margin-top: 2vw; height: 35vh;">광고</a>
+          </div>
+        </li>
+    </ul>
+</div>
