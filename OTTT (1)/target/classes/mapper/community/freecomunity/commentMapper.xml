@@ -13,7 +13,7 @@
 			, user_no				-- 회원번
 			, article_no			-- 게시판 번호
 			, cmt_content			-- 댓글 내용
-			, cmt_writer			-- 작성자 명
+			, (SELECT user_nicknm FROM tb_user tu WHERE tu.user_no = tb.user_no) as cmt_writer
 			, cmt_dt				-- 작성일
 			, (SELECT image FROM tb_user tu WHERE tu.user_no = tb.user_no) as image		-- 프로필사진
 			, CASE	

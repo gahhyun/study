@@ -104,7 +104,7 @@
 											<a onclick="return false;" style="white-space: pre-wrap;" id="textP">${articleDTO.article_content }</a>
 										</c:when>
 										<c:otherwise>
-       										<textarea class="writeHere" rows="10"	placeholder="Write Here" id="article_content" name="article_content"   onkeydown="resize(this)" onkeyup="resize(this)" name="article_content" > ${articleDTO.article_content } </textarea>
+       										<textarea class="writeHere" rows="10"	placeholder="Write Here" id="article_content" name="article_content"   onkeydown="resize(this)" onkeyup="resize(this)" name="article_content" >${articleDTO.article_content } </textarea>
 										</c:otherwise>
 									</c:choose>
              					</div>
@@ -381,7 +381,7 @@
 				
 	   		});
 			
-
+//*************************************************************************************************************
 			
 			
 	     	
@@ -412,9 +412,9 @@
 			}
 			
 	     	
-	     	
+			//폼서브밋 방식으로 삭제요청
 	     	function post_delete(){
-	   			//폼서브밋 방식으로 삭제요청
+	   			
 				if(LOGIN_YN == null || LOGIN_YN == ""){
 					swal("로그인 후 이용가능합니다.","로그인을 해주세요.", "warning")
 					.then(function(){
@@ -570,7 +570,7 @@
 				if(list.length > 0){
 
 					list.forEach(function(v ,i){
-
+						
 						
 						createHtml +=	'<li class="comment_show">';
 						createHtml +=		'<div class="pro-dan">';
@@ -727,7 +727,7 @@
 			*/				
 			function fnSaveCallBack(response){
 				console.log("fnSaveCallBack ajax 통신결과");
-				console.log(response);		
+				console.log(response);
 				if(response.result > 0){
 					$(".body").html(response.message);
 		   	    	$("#commentModal").modal("show");
@@ -749,8 +749,13 @@
 				$.post(PATH+url, sendData)
 			  	.done(callbackFunction)		//ajax 호출 성공후 실행하는 함수
 			  	.fail(function(jqXHR, textStatus, errorThrown) {  // 요청이 실패한 경우 실행되는 함수
-					$(".body").html("처리중 오류가 발생하였습니다.")
-	   	    		$("#commentModal").modal("show");	
+			  		 if (url === "/community/ajax/insertReport") {
+			                $(".body").html("이미 신고 되었습니다.");
+			                $("#commentModal").modal("show");
+			            } else {
+			                $(".body").html("처리중 오류가 발생하였습니다.");
+			                $("#commentModal").modal("show");
+			            }	
 			  		console.log("요청이 실패했습니다.");
 				    console.log(jqXHR); // 실패한 XMLHttpRequest 객체에 대한 정보
 				    console.log(textStatus); // 실패한 상태에 대한 설명
@@ -829,7 +834,12 @@
 	   						$(".body").html(response.message)
 	   		   	    		$("#commentModal").modal("show");					
 	   					}								
-   					}
+   					},
+   					function () {
+   				      // Ajax 요청이 실패한 경우 모달 표시
+   				      $(".body").html("신고 저장에 실패했습니다.");
+   				      $("#commentModal").modal("show");
+   				    }
    				);		
 	   		}
 	   		

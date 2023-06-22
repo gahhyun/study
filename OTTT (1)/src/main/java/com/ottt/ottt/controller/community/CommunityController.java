@@ -347,6 +347,10 @@ public class CommunityController {
 			result.put("result", 1);
 			result.put("message", "신고되었습니다.");
 		}
+		if(communityService.insertReport(dto) != 1) {
+			result.put("result", 1);
+			result.put("message", "미 신고.");
+		}
 
 		return result;
 		

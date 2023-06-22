@@ -110,7 +110,7 @@
 			                          			</div>
 			                          			<div class="modal-body">등록하시겠습니까?</div>
 			                          			<div class="modal-footer">
-			                          				<button type="button" id="saveBtn"class="btn btn-primary">Yes</button>
+			                          				<button type="button" id="saveBtn"class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
 			                            			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
 			                          			</div>
 			                       			</div>
@@ -382,14 +382,14 @@
 						createHtml += 		'<div class="post_info">';
 						if(v.writer_chk == "Y"){
 							createHtml +=			'<div style="display: flex;">';
-							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="usur_img" src="'+ v.image +'" alt="profile"></a>';
+							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="user_img" src="'+ v.image +'" alt="profile"></a>';
 							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><span class="nickname">'+ v.user_nicknm +'</span></a>';
 							createHtml +=				'<span id="current_date" >'+ formattedDate +'</span>';
 							createHtml +=			'</div>';
 							createHtml +=		'</div>'										
 						}else {
 							createHtml +=			'<div style="display: flex;">';
-							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="usur_img" src="'+ v.image +'" alt="profile"></a>';
+							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="user_img" src="'+ v.image +'" alt="profile"></a>';
 							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><span class="nickname">'+ v.user_nicknm +'</span></a>';
 							createHtml +=				'<span id="current_date" >'+ formattedDate +'</span>';
 							createHtml +=			'</div>';
@@ -598,7 +598,11 @@
 	   		   	    		$("#postMainModal").modal("show");					
 	   					}								
    					}
-   				);		
+	   			).fail(function () {
+	   			    // Ajax 요청이 실패한 경우 모달 표시
+	   			    $(".body").html("이미 신고 되었습니다.");
+	   			    $("#postMainModal").modal("show");
+	   			});		
 	   			
 	   		}
 			
