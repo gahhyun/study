@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.ottt.ottt.dao.CommunityMapper">
+
+	<!-- 상세(1건) 조회 -->
+	<select id="select" parameterType="ArticleDTO" resultType="ArticleDTO">
+		/*com.ottt.ottt.dao.CommunityMapper.select 호출*/
+		SELECT 
+			ta.article_no			-- 게시물번호
+         	, (SELECT COUNT(*) FROM tb_comment tc2 WHERE tc2.article_no = ta.article_no) as comment_count	-- 코멘트 개수
+         	, (SELECT COUNT(*) FROM tb_article_like tal2 WHERE tal2.article_no = ta.article_no) AS like_count -- 좋아요 개수
+ 			, (SELECT COUNT(*) FROM tb_article_like tal3 WHERE tal3.article_no = ta.article_no AND tal3.user_no = #{user_no} ) AS check_like_count -- 내가 눌렀는지 확인
+			, ta.user_no			-- 유저번호
+			, ta.article_index_no	-- 게시판구분
+			, ta.article_content	-- 게시판 내용
+			, ta.article_image		-- 사진 경로
+			, ta.article_image_name -- 사진파일 명
+			, ta.article_title		-- 게시판 제목
+			, tu.user_nicknm				-- 사용자 닉네임
+			, to_char(ta.article_create_dt,'YYYY-MM-DD') AS article_create_dt	-- 등록일
+			, to_char(ta.article_mod_dt,'YYYY-MM-DD') AS article_create_dt	-- 수정일
+		FROM tb_article ta
+		INNER JOIN tb_user tu				-- 사용자 테이블
+		ON ta.user_no = tu.user_no 	
+		WHERE ta.article_index_no = '1' 
+		AND ta.article_no = #{article_no} 
+	</select>
+	
+	<!-- 메인 new 목록(페이징형) -->
+    <select id="getArticleList" parameterType="ArticleSearchDTO" resultType="ArticleDTO">
+		
+		/*com.ottt.ottt.dao.CommunityMapper.getArticleList 호출*/
+		SELECT 
+			DISTINCT ta.article_no							-- 게시물번호
+			, tc.article_no as comment_article_no 			-- 코맨드 작성한 게시물번호
+			, tal.article_no as like_article_no 			-- 좋아요 누른 게시물번호
+         	, (SELECT COUNT(*) FROM tb_comment tc2 WHERE tc2.article_no = ta.article_no) as comment_count	-- 코멘트 개수
+         	, (SELECT COUNT(*) FROM tb_article_like tal2 WHERE tal2.article_no = ta.article_no) AS like_count -- 좋아요 개수
+			, tu.user_no							-- 유저번호
+			, ta.article_index_no					-- 게시판구분
+			, ta.article_content					-- 게시판 내용
+			, ta.article_image						-- 사진 경로
+			, ta.article_title						-- 게시판 제목
+			, to_char(ta.article_create_dt,'YYYY-MM-DD') AS article_create_dt	-- 등록일
+			, to_char(ta.article_mod_dt,'YYYY-MM-DD') AS article_create_dt	-- 수정일
+			, ta.report_cnt
+			, tu.user_nicknm				-- 사용자 닉네임
+		FROM tb_article ta
+		INNER JOIN tb_user tu				-- 사용자 테이블
+		ON ta.user_no = tu.user_no 	
+		LEFT OUTER JOIN tb_comment tc		-- 댓글 테이블 
+		ON ta.article_no = tc.article_no 
+		LEFT OUTER JOIN TB_ARTICLE_LIKE tal	-- 좋아요 테이블
+		ON ta.article_no = tal.article_no 
+		WHERE ta.article_index_no = '1' 	-- 게시판 분류
+
+		<if test="category != null and category == 'myPost'	">		<!-- 내가쓴 글 -->
+			AND ta.article_no NOTNULL 
+			AND ta.user_no = #{user_no}
+		</if>
+		<if test="category != null and category == 'myComment'	">	<!-- 내가 댓글단 글 -->
+			/*내가 댓글 단 게시물*/
+			AND tc.article_no NOTNULL 
+			AND tc.user_no = #{user_no}
+		</if>
+		<if test="category != null and category == 'myLike'		">	<!-- 내가 좋아요한 글 -->
+			/*내가 좋아요한 게시물*/
+			AND tal.article_no NOTNULL 
+			AND tal.user_no = #{user_no}
+		</if>
+		<if test="schText != null and schText != '' ">				<!-- 검색어로 조회 -->
+			/*게시물내용 검색*/
+			AND ta.article_content LIKE CONCAT('%', #{schText}, '%')
+		</if>
+		ORDER BY ta.article_no DESC
+        LIMIT 10				-- 10개씩 보이기 고정
+        OFFSET #{offset}		-- 구간 조회
+
+    </select>
+	
+	<!-- 총 개수 -->
+	<select id="getArticleTotalCount" parameterType="ArticleSearchDTO" resultType="int">
+
+		/*com.ottt.ottt.dao.CommunityMapper.getArticleTotalCount 호출*/
+		SELECT COUNT(DISTINCT ta.article_no) 
+		FROM tb_article ta
+		INNER JOIN tb_user tu				-- 사용자 테이블
+		ON ta.user_no = tu.user_no 	
+		LEFT OUTER JOIN tb_comment tc		-- 댓글 테이블 
+		ON ta.article_no = tc.article_no 
+		LEFT OUTER JOIN TB_ARTICLE_LIKE tal	-- 좋아요 테이블
+		ON ta.article_no = tal.article_no 
+		WHERE ta.article_index_no = '1' 	-- 게시판 분류
+		<if test="category != null and category == 'myPost'	">		<!-- 내가쓴 글 -->
+			AND ta.article_no NOTNULL 
+			AND ta.user_no = #{user_no}
+		</if>
+		<if test="category != null and category == 'myComment'	">	<!-- 내가 댓글단 글 -->
+			/*내가 댓글 단 게시물*/
+			AND tc.article_no NOTNULL 
+			AND tc.user_no = #{user_no}
+		</if>
+		<if test="category != null and category == 'myLike'		">	<!-- 내가 좋아요한 글 -->
+			/*내가 좋아요한 게시물*/
+			AND tal.article_no NOTNULL 
+			AND tal.user_no = #{user_no}
+		</if>
+		<if test="schText != null and schText != '' ">				<!-- 검색어로 조회 -->
+			/*게시물내용 검색*/
+			AND ta.article_content LIKE CONCAT('%', #{schText}, '%')
+		</if>
+
+	</select>
+
+	<!-- 저장 -->
+	<insert id="insert" parameterType="ArticleDTO">
+		/*com.ottt.ottt.dao.CommunityMapper.insert 호출*/
+		INSERT INTO tb_article (
+			article_content
+			, article_image
+			, article_image_name
+			, user_no 
+			, article_create_dt
+			, article_index_no
+		)
+		VALUES(
+			#{article_content}
+			, #{article_image}
+			, #{article_image_name}
+			, #{user_no}
+			, now()
+			,'1'
+		)
+	</insert>
+
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="int">
+		/*com.ottt.ottt.dao.CommunityMapper.delete 호출*/
+		delete from tb_article
+		where article_no = #{article_no}
+	</delete>
+	
+	<!-- 수정 -->
+	<update id="update" parameterType="ArticleDTO">
+		/*com.ottt.ottt.dao.CommunityMapper.update 호출*/
+		
+		UPDATE 
+			tb_article
+		SET 
+			article_content = #{article_content}
+			<if test = 'article_image_name != null and article_image_name neq "" '>
+				, article_image = #{article_image}
+				, article_image_name = #{article_image_name}
+			</if>
+			, article_mod_dt = now()
+		WHERE article_no = #{article_no} 
+		AND user_no = #{user_no}
+	</update>
+
+	<!-- 좋아요를 눌렀는지 카운트를 조회한다. -->
+	<select id="selectLikeCount" parameterType="ArticleDTO" resultType="int">
+		/*com.ottt.ottt.dao.CommunityMapper.selectLikeCount 호출*/
+        SELECT count(*) as count FROM tb_article_like 
+		WHERE article_no = #{article_no} 
+		AND user_no = #{user_no} 
+	</select>
+
+	<!-- 좋아요 저장 -->
+	<insert id="insertLike" parameterType="ArticleLikeDTO">
+		/*com.ottt.ottt.dao.CommunityMapper.insertLike 호출*/
+    	INSERT into tb_article_like(
+        	user_no 
+        	, article_no 
+    	)
+    	VALUES(
+       		#{user_no}
+       		, #{article_no}
+   		)
+	</insert>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="deleteLike" parameterType="ArticleLikeDTO">
+		/*com.ottt.ottt.dao.CommunityMapper.deleteLike 호출*/
+    	DELETE FROM tb_article_like 
+    	WHERE user_no = #{user_no} 
+    	AND article_no = #{article_no}
+	</delete>
+
+</mapper>

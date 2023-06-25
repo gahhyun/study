@@ -1,0 +1,278 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+
+*{margin: 0;padding: 0;font-family: 'Noto Sans KR', sans-serif;}
+ 
+a{text-decoration: none;color: inherit;display: block;}
+
+ul,li,ol{list-style: none;}
+
+body{background-color: #202020;color: #fff;}
+
+.wrap{width: 100%;height: 100%;position: relative;}
+
+/* header Start*/
+header{ width: 1200px; height: 130px;box-sizing: border-box;margin: 0 auto;position: relative;display: flex;}
+
+.logo{    width: 230px;
+    height : 95px;   
+    margin-top: 30px;}
+
+.logo > a > img{margin-top: 2.5px;width: 200px;}
+
+.gnb > ul{display: flex;}
+
+.gnb > ul > li{
+    width: 70px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    margin-top: 30px;
+    margin-right:5px;
+}
+
+
+.gnb a{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.gnb > ul > li:hover{
+    color: #33ff33;
+}
+
+.h-icon{
+    width: 120px;
+    height: 58px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.h-icon > ul{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 12px;
+}
+
+/* .h-icon  img{
+    width: 50px;
+} */
+
+
+
+.h-icon > ul > li:first-child > a{
+    background:url("../../../images/icon/search02.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:first-child > a:hover{
+    background: url("../../../images/icon/search-h.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:last-child > a{
+    background:url("../../../images/img/profile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+/* .h-icon > ul > li:last-child > a:hover{
+    background: url("../images/user-h.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+} */
+
+/* header End */
+
+/* meun bar Start */
+#line-1 {
+    width: 1200px;
+    background-color: transparent;
+    border: none;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-top-color:#33ff33;
+    border-top-width:3pxw ;
+    border-bottom-width: 3px;
+    border-bottom-color: #33FF33; 
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    margin-bottom: 40px;
+    
+}
+
+.nav-link1{
+    color: #ffffff; 
+    font-size: 25px; 
+    padding:2px;
+    text-decoration-line: none;
+    margin-left: 140px;
+}
+.nav-link1:hover{color: #33FF33;}
+
+.nav a:nth-child(1){margin-left: 3.5vw;}
+
+/* meun bar ENd */
+
+
+
+/*
+필드 숨기는 코드를 설명해보자면,
+
+‣ position: absolute : clip이 absolute, fixed일 때만 적용 가능하기 때문 + 레이아웃에 영향을 끼치지 않게.
+
+‣ width: 1px; height: 1px : 스크린 리더가 읽을 수 있도록
+
+‣ padding: 0 : 상속되거나 적용될 수 있는 스타일을 제거해서 안전하게
+
+‣ border: 0 : 상속되거나 적용될 수 있는 스타일을 제거해서 안전하게. 그리고 border: none과 border: 0은 다른데, border: none으로 했을 때 border-style을 적용할 경우 우선순위때문에 border: none인데도 테두리가 생긴다. 그래서 더 안전한 border: 0을 사용
+
+‣ margin: -1px : 부모 요소 밖으로 위치시킴
+
+‣ clip: rect(0, 0, 0, 0) : 요소 숨기기. 처음에 top, right, bottom, left를 margin 줄 때처럼 생각을 해서 이해를 못 했는데 선언 순서는 같지만 기준 점이 다르다. clip은 네 방향 모두 좌측상단이 기준이다.margin 에서 bottom은 해당 요소 아래에서 얼마큼 떨어질지였지만, clip은 상단에서 얼마큼 떨어질지가 bottom라인이 된다. 그래서 top과 bottom이 같은 값이면 요소가 숨겨지게 된다. 마찬가지로 left, right가 같은 값이면 요소가 숨겨진다. 
+
+‣ overflow: hidden : overflow된 콘텐츠를 숨기기.
+*/
+
+/*글작성 관련 시작*/
+.qa-main{
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    /* border: 1px solid red; */
+}
+
+/* .text-create{
+    font-size: 23px;
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+}
+
+.text-create a{
+    margin-right: 30px;
+}
+
+.text-create a:hover{
+    color: #33FF33;
+} */
+
+
+/* .btn, .btn-outline-success{
+    color: #fff;
+    background-color: transparent;
+    border-style: none;
+    border-color: #fff; 
+    font-size: 23px; 
+    text-decoration: none;
+} */
+
+.qa-main p{
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+}
+
+.btn{
+    color: #fff;
+    background-color: transparent;
+    border-style: none;
+    border-color: #fff; 
+    font-size: 23px; 
+    text-decoration: none;
+}
+
+
+.btn:hover{
+    border-color: #33FF33;
+    background-color: transparent;
+    border-style: solid;
+    color: #33FF33; 
+}
+
+/* 모달 */
+.modal-content{
+    background-color: #202020;
+}
+
+.modal-body{
+    font-size: 26px;
+    text-align: center;
+    border: 1px solid #fff;
+}
+
+.modal-header{
+    border: 1px solid #fff;
+}
+
+.modal-footer{
+    border: 1px solid #fff;
+}
+ 
+.modi-del{
+    text-align: right;
+}
+
+
+
+
+/* 글목록 배너 */
+.title-region{
+    position: relative;
+    margin: 20px 0;
+}
+
+.title-mainline{
+    width: 1100px;
+    height: 50px;
+    border-bottom: 2.5px solid #fff;
+    margin: 0 auto;
+}
+
+.title-mainline span{
+    font-size: 23px;
+    padding: 10px;
+}
+
+.title-line{
+    width: 1100px;
+    height: auto;
+    font-size: 20px;
+    padding: 10px 0;
+    border-bottom: 2.5px solid #fff;
+    margin: 0 auto;
+}
+
+.writeHere{
+    color: #fff;
+    border: none;
+    background-color: #202020;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 1100px;
+    min-height: 5rem;
+    max-height: max-content;
+    overflow-y: hidden;
+    resize: none;
+}
+.writeHere:focus{
+    outline: none;
+}

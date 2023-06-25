@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.ottt.ottt.dao.content.searchWordMapper">
+
+	<insert id="searchWordInsert" parameterType="map">
+		INSERT INTO tb_search_word
+		(user_no, search_content)
+		VALUES(#{user_no}, #{content_nm})		
+	</insert>
+	
+	<select id="searchWorldSelect" parameterType="int" resultType="SearchWordDTO">
+		SELECT search_word_no, user_no, search_content
+		FROM tb_search_word
+		where user_no = #{user_no}
+		order by search_word_no desc 
+	</select>
+	
+	<delete id="searchWordDelete" parameterType="int">
+		DELETE FROM tb_search_word
+		WHERE search_word_no=#{search_word_no}
+	</delete>
+	
+	<select id="searchWorldOneSelect" parameterType="int" resultType="SearchWordDTO">
+		SELECT search_word_no
+		FROM tb_search_word
+		where search_word_no=${search_word_no}
+	</select>
+
+</mapper>

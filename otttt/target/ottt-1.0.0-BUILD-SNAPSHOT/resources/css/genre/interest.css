@@ -1,0 +1,179 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+
+*{margin: 0;padding: 0;font-family: 'Noto Sans KR', sans-serif;}
+ 
+a{text-decoration: none;color: inherit;display: block;}
+
+ul,li,ol{list-style: none;}
+
+body{background-color: #202020;color: #fff;}
+
+.wrap{width: 100%;height: 100%;position: relative;}
+
+/* header Start*/
+header{ width: 1200px; height: 130px;box-sizing: border-box;margin: 0 auto;position: relative;display: flex;}
+
+.logo{
+  width: 230px;
+  height : 95px;   
+  margin-top: 30px;
+}
+
+.logo > a > img{margin-top: 2.5px;width: 200px;}
+
+.gnb > ul{display: flex;}
+
+.gnb > ul > li{
+    width: 70px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    margin-top: 30px;
+    margin-right:5px;
+}
+
+.gnb a{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.gnb a:hover{
+    color: #33ff33;
+}
+
+.h-icon{
+    width: 120px;
+    height: 58px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.h-icon > ul{
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 12px;
+  padding-left: 2rem;
+}
+
+/* .h-icon  img{
+    width: 50px;
+} */
+
+
+
+.h-icon > ul > li:first-child > a{
+    background:url("../images/icon/search02.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:last-child > a{
+    background:url("../images/icon/profile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:first-child > a:hover{
+    background: url("../images/icon/searchh.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.ott-logo-box {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.ott-logo-box > a {
+  width: 64px;
+  height: 64px;
+}
+
+.ott-logo-divider {
+  border: none;
+  height: 1px;
+  margin: 40px 0;
+  
+  
+}
+
+.ott-logo-text {
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+.ott-logo-text > li {
+  width: 150px;
+  height: 60px;
+  font-size: 24px;
+  display: flex;
+  line-height: 56px;
+  flex-direction: row;
+ 
+  
+}
+.submit-1{
+  width:80px;
+  height: 30px;
+  background-color: #202020;
+  border-radius: 5px;
+  color:#ffffff;
+  margin: -32px 925px;
+
+}
+.submit-1:hover{
+  
+  color:#33ff33;
+
+}
+.ott-logo-text > li > a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.ott-logo-text > li > a:hover {
+  color: #33ff33;
+}
+
+.sec00 {
+  height: 136px;
+  width: 1100px;
+}
+
+.dropdown-itemtemp{
+  width:200px;
+  height: 32px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+}
+
+.sec00 > img {
+  width: 100%;
+}
+
+
+.dropdown-filter {
+  width: 88px;
+  height: auto;
+  float:right;
+  background-color: #202020;
+
+}
+.dropdown-menu{
+  padding-block: 0;
+  
+}

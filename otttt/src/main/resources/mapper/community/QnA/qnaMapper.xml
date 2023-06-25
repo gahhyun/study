@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ottt.ottt.dao.community.qnaMapper">
+  
+  	<select id="selectList" parameterType="map" resultType="ArticleDTO">
+  		SELECT article_title, article_create_dt, article_no
+		FROM tb_article
+		where article_index_no = '2' and user_no = #{user_no}
+		order by article_no desc 
+		limit #{pageSize} offset #{offset}
+  	</select>
+  	
+  	<select id="count" parameterType="map" resultType="int">
+  		select count(*) 
+		from tb_article 
+		where article_index_no = '2' and user_no = #{user_no}
+  	</select>
+  	
+  	<select id="selectAll" parameterType="SearchItem" resultType="ArticleDTO">
+  		select * 
+		from tb_article
+		where article_index_no = '2'
+		order by article_no desc 
+		limit #{pageSize} offset #{offset}
+  	</select>
+  	
+  	<select id="countAll" parameterType="SearchItem" resultType="int">
+  		select count(*) 
+		from tb_article
+		where article_index_no = '2'
+  	</select>
+  	 	
+  	<insert id="insert" parameterType="ArticleDTO">
+		INSERT INTO tb_article
+		(article_index_no, article_content, article_title, article_create_dt, user_no)
+		VALUES('2', #{article_content}, #{article_title}, now(), #{user_no})  		
+  	</insert>
+  	
+  	<select id="select" parameterType="int" resultType="ArticleDTO">
+  		select * from tb_article
+  		where article_no = #{article_no} 
+  	</select>
+  	
+  	<update id="update" parameterType="ArticleDTO">
+  		update tb_article
+  		set article_content=#{article_content}, article_title=#{article_title}, article_mod_dt=now()
+  		where article_no = #{article_no}
+  	</update>
+  	
+  	<delete id="delete" parameterType="int">
+  		delete from tb_article
+  		where article_no = #{article_no}
+  	</delete>
+  </mapper>
