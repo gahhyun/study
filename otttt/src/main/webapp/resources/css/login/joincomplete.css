@@ -1,0 +1,201 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+/* font-family: 'Noto Sans KR', sans-serif; */
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+ul,li,ol{
+    list-style: none;
+}
+
+body{
+    background-color: #202020;
+    color: #fff;   
+}
+
+.wrap{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* header */
+
+header{
+    width: 1200px;
+    height: 130px;
+    
+    box-sizing: border-box;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+}
+
+.logo{
+    width: 230px;
+    height : 95px;   
+    margin-top: 30px;
+    margin-right: 46px;
+}
+
+.logo > a > img{
+    margin-top: 2.5px;
+    width: 200px;
+}
+
+.gnb > ul{
+    display: flex;
+}
+
+.gnb > ul > li{
+    width: 70px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    margin-top: 30px;
+    margin-right:5px;
+}
+
+.gnb a{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.gnb > ul > li:hover{
+    color: #33ff33;
+}
+
+.h-icon{
+    width: 120px;
+    height: 58px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.h-icon > ul{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 12px;
+    padding-left: 2rem;
+}
+
+/* .h-icon  img{
+    width: 50px;
+} */
+
+
+
+.h-icon > ul > li:first-child > a{
+	background-image: url("../../img/search02.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 32px;
+	width: 32px;
+	height: 32px;
+}
+
+.h-icon > ul > li:first-child > a:hover{
+    background: url("../../img/search-h.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.h-icon > ul > li:last-child > a{
+    background:url("../../img/user01.png");
+    background-repeat:no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+
+
+.h-icon > ul > li:last-child > a:hover{
+    background: url("../../img/user-h.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+/* main */
+
+/* section01 */
+
+
+
+.Login{
+    width: 370px;
+    padding: 40px;
+    box-sizing: border-box;
+    text-align: center;
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translate(-50%, 50%)
+	
+}
+
+.hihi > input{
+    width: 100%;
+    height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    background-color:#3F3B3B;
+    color: white;
+    position: relative;
+    top: 50px;
+}
+
+
+
+
+.id_input {
+	border: 2px solid gray;
+}
+
+.pw_input {
+	border: 2px solid gray;
+}
+
+
+.hihi > input[type="submit"]{
+    color: #000;
+    font-size: 16px;
+    height: 40px;
+    background-color:#33ff33;
+    margin-top: 1px;
+}
+
+  /* 로그인 실패시 경고글 */
+.login_warn{
+	position: absolute;
+    top: 300px;
+   	right: 800px;
+    text-align: center;
+    color : red;
+}
+
+
+
+
+
