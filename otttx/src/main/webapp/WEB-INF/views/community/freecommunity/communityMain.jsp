@@ -421,7 +421,7 @@
 						
 						createHtml +=				'<input onclick="javascript:fnPushHeart('+ v.article_no +','+INDEX+');" class="heart_img" type="image" id="pushHeart_'+INDEX+'" src="'+ PATH +'/resources/images/img/heart_'+heartOnOffImg+'.png" alt="heart">';
 						createHtml +=				'<span style="margin-left: 4px;" id="likeCount_'+INDEX+'"	>'+ v.like_count +'</span>'; 
-						createHtml +=				'<input class="re_comment_img" type="image" src="'+ PATH +'/resources/images/img/comment.png" alt="comment">';
+						createHtml +=				'<input class="re_comment_img" type="image" src="'+ PATH +'/resources/images/img/comment.png" alt="comment" onclick="goToPost('+v.article_no+');">';
 						createHtml +=				'<span style="margin-left: 4px;">'+ v.comment_count +'</span>';                  
 						createHtml +=			'</div>';
 						createHtml +=		'</div>';
@@ -604,6 +604,16 @@
 	   			});		
 	   			
 	   		}
+	   		
+	   		
+	   		
+	   	  /* 댓글 이미지 클릭 시 */
+	   	  function goToPost(postNumber) {
+	   	    // 게시글 번호를 가지고 이동하는 로직을 작성합니다.
+	   	    // 예를 들어, 해당 게시글로의 링크를 생성하고 이동하는 방법을 사용할 수 있습니다.
+	   	    var postLink = '/ottt/community/post?article_no=' + postNumber; // 게시글 번호를 이용한 링크 생성
+	   	    window.location.href = postLink; // 생성된 링크로 이동
+	   	  }
 			
 		</script>
 	</body>
