@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ottt.ottt.dao.review.reviewMapper">
+  	<!-- 리뷰 페이지  -->
+	<delete id="delete" parameterType="map">
+		delete from tb_review 
+        where review_no = #{review_no} and user_no = #{user_no}
+  	</delete>
+    
+    <update id="update" parameterType="ReviewDTO" >
+    	update tb_review set review_content=#{review_content}
+    	, rating=#{rating}, spoiler=#{spoiler}
+        where review_no=#{review_no} and user_no=#{user_no}
+	</update>   
+   
+   <insert id="insert" parameterType="ReviewDTO">
+		insert into tb_review (user_no, rating , review_content, content_no, spoiler)
+		values (#{user_no}, #{rating}, #{review_content}, #{content_no}, #{spoiler})
+    </insert>
+   
+   <select id="selectAll" resultType="ReviewDTO" parameterType="int">
+		select user_nicknm, a.rating, review_content, a.review_no, a.user_no, review_no, a.spoiler
+		, review_create_dt, a.content_no, comment_cnt, b.image
+		,(select count(*) from tb_review_like c1 where c1.review_no = a.review_no) as like_count
+		,(select count(*) from tb_review_like c2 where c2.review_no = a.review_no and c2.user_no = #{user_no}) as check_like_count
+		from tb_review a, tb_user b, tb_content
+		where a.user_no = b.user_no and a.content_no = tb_content.content_no and a.content_no = #{content_no}
+		order by review_no desc
+   </select>
+       
+	<select id="count" resultType="int">
+		SELECT COALESCE(COUNT(*), 0) AS review_count
+		FROM tb_review
+		WHERE content_no = #{content_no}
+	</select>
+  
+   <select id="ratingAvg" parameterType="int" resultType="double">
+		SELECT ROUND(AVG(rating)), tb_review.content_no
+		FROM tb_review
+		WHERE tb_review.content_no = #{content_no}
+		GROUP BY tb_review.content_no  
+   </select>
+  
+   <select id="selectReview" parameterType="map" resultType="ReviewDTO">
+      SELECT review_no, c.content_no, a.rating, review_content, b.image
+      , review_create_dt, b.user_nicknm, b.user_no, comment_cnt, c.main_img
+      ,(select count(*) from tb_review_like c1 where c1.review_no = a.review_no) as like_count
+      ,(select count(*) from tb_review_like c2 where c2.review_no = a.review_no and c2.user_no = #{user_no}) as check_like_count
+      FROM tb_review a, tb_user b, tb_content c
+      where a.user_no = b.user_no and c.content_no = #{content_no} and b.user_no = #{user_no} and a.content_no = c.content_no
+   </select> 
+  
+	<update id="updateCommentCnt" parameterType="map">
+		update tb_review 
+		set comment_cnt = comment_cnt + #{cnt}
+		where review_no = #{review_no}
+	</update> 
+  
+	<update id="deleteCommentCnt" parameterType="map">
+		update tb_review 
+		set comment_cnt = comment_cnt - #{cnt}
+		where review_no = #{review_no}
+	</update>
+	
+	<select id="reviewDuplication" parameterType="map" resultType="int">
+		select count(*)
+		from tb_review
+		where content_no = #{content_no} and user_no = #{user_no}
+	</select>
+
+	<insert id="reviewReport" parameterType="ReportDTO">
+		insert into tb_report (user_no, target_user_no , review_no, report_type)
+		values (#{user_no}, #{target_user_no} ,#{review_no}, #{report_type})
+	</insert>
+  
+	<!-- 리플 페이지  -->
+	<select id="selectReply" parameterType="Integer" resultType="CommentDTO">
+		select cmt_no, user_no, review_no, cmt_content, cmt_writer, cmt_dt, cmt_mod_dt
+		from tb_comment
+		where cmt_no = #{cmt_no};
+	</select>
+	
+   <select id="replyReview" parameterType="map" resultType="ReviewDTO">
+   	  SELECT review_no, content_no, a.rating, review_content, b.image
+   	  , review_create_dt, b.user_nicknm, b.user_no, a.comment_cnt 
+   	  ,(select count(*) from tb_review_like c1 where c1.review_no = a.review_no) as like_count
+      ,(select count(*) from tb_review_like c2 where c2.review_no = a.review_no and c2.user_no = #{user_no}) as check_like_count 
+      FROM tb_review a, tb_user b
+      where a.review_no =#{review_no} and a.user_no = b.user_no
+   </select>
+  
+   <select id="allreply" parameterType="Integer" resultType="CommentDTO">
+	select user_nicknm, a.user_no, a.review_no
+	, cmt_no, cmt_dt, cmt_content, b.image
+	from tb_comment a, tb_user b, tb_review c 
+	where a.review_no = c.review_no and a.user_no = b.user_no and a.review_no = #{review_no} 
+	order by cmt_no DESC  
+   </select>
+
+	<select id="replyCount" resultType="int" parameterType="Integer">
+		select count(*) 
+		from tb_comment 
+		where tb_comment.review_no = #{review_no} 	
+	</select>
+   
+	<insert id="insertReply" parameterType="CommentDTO">
+		INSERT INTO tb_comment (user_no, review_no, cmt_content, cmt_writer)
+		SELECT #{user_no}, #{review_no}, #{cmt_content}, #{user_nicknm}
+		FROM tb_user 
+		WHERE tb_user.user_no = #{user_no}
+	</insert> 
+
+	<delete id="deleteReply" parameterType="map">
+		delete from tb_comment 
+		where cmt_no = #{cmt_no} and user_no = #{user_no}
+	</delete>
+
+    <update id="updateReply" parameterType="CommentDTO">
+	    UPDATE tb_comment
+		SET cmt_content = #{cmt_content}, cmt_mod_dt= now()
+		WHERE cmt_no= #{cmt_no} and user_no = #{user_no};
+    </update>
+    
+    <select id="selectLikeCount" parameterType="ReviewDTO" resultType="int">
+        SELECT count(*) as count FROM tb_review_like 
+		WHERE review_no = #{review_no} 
+		AND user_no = #{user_no} 
+	</select>
+
+	<insert id="insertLike" parameterType="ReviewLikeDTO">	
+    	INSERT into tb_review_like(user_no, review_no)
+    	VALUES(#{user_no}, #{review_no})
+	</insert>
+	
+	<delete id="deleteLike" parameterType="ReviewLikeDTO">
+		
+    	DELETE FROM tb_review_like 
+    	WHERE user_no = #{user_no} 
+    	AND review_no = #{review_no}
+	</delete>
+	
+
+	<!-- 나의 리뷰  -->
+	<select id="myReviewAll" parameterType="SearchItem" resultType="ReviewDTO">
+		SELECT a.review_no, a.rating, a.review_content, a.content_no, b.content_nm, b.thumbnail
+		FROM tb_review a
+		join tb_content b
+		on a.content_no = b.content_no
+		join tb_user c
+		on a.user_no = c.user_no
+		where c.user_no = #{user_no}
+		order by a.review_no desc
+	  	limit #{pageSize} offset #{offset}
+	</select>
+	
+	<select id="myReviewCnt" parameterType="SearchItem" resultType="int">
+		SELECT count(*)
+		FROM tb_review a
+		join tb_content b
+		on a.content_no = b.content_no
+		join tb_user c
+		on a.user_no = c.user_no
+		where c.user_no = #{user_no}
+	</select>
+
+	<insert id="replyReport" parameterType="ReportDTO">
+		insert into tb_report (user_no, target_user_no , cmt_no, report_type)
+		values (#{user_no}, #{target_user_no} ,#{cmt_no}, #{report_type})
+	</insert>
+	
+</mapper>

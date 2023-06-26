@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.ottt.ottt.dao.community.endmovieMapper">
+
+  	<select id="endOttSelect" parameterType="int" resultType="EndServiceDTO" >
+  		SELECT *
+		FROM tb_end_service
+		where ott_no = #{ott_no}
+  	</select>
+
+  	<select id="endDateSelect" parameterType="map" resultType="EndServiceDTO">
+  		SELECT * FROM tb_end_service 
+  		WHERE end_date BETWEEN #{end_date_1} AND #{end_date_2} AND ott_no = #{ott_no}
+  	</select>
+
+  	<select id="dayDateSelect" parameterType="map" resultType="EndServiceDTO">
+  		SELECT a.end_service_no, a.ott_no, a.content_no, b.content_nm, c.ott_nm
+  		, extract('Year' from a.end_date) as year
+  		, extract('Month' from a.end_date) as month
+		, extract('DAY' from a.end_date) as day
+		FROM tb_end_service a
+		join tb_content b
+		on a.content_no = b.content_no
+		join tb_ott c
+		on a.ott_no = c.ott_no
+		WHERE end_date BETWEEN #{end_date_1} AND #{end_date_2} AND a.ott_no = #{ott_no}
+  	</select>
+  	
+  </mapper> 
+ 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ottt.ottt.dao.login.addInfoMapper">
+  
+  	<insert id="insert" parameterType="UserOTTDTO">
+		INSERT INTO tb_user_ott
+		(user_no, ott_no)
+		VALUES(#{user_no}, #{ott_no} ); 		
+  	</insert>
+  
+  	<select id="select" parameterType="int" resultType="UserOTTDTO">
+  		select * from tb_user_ott
+  		where user_no = #{user_no}
+  	</select>
+  
+  
+  </mapper>
+  
+  	

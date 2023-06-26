@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ottt.ottt.dao.mypage.WishlistMapper">
+  
+  <select id="wishSelect" parameterType="int" resultType="WishlistDTO">
+	SELECT user_no, content_no
+	FROM tb_wishlist
+	where user_no = #{user_no}
+  </select>
+  
+  <select id="myWishListSelect" parameterType="SearchItem" resultType="WishlistDTO">
+	SELECT distinct a.user_no, a.content_no, b.category_no
+		, c.content_nm, c.thumbnail, a.wish_date
+		, coalesce((select round(avg(d.rating))/2 FROM tb_review d where d.content_no = c.content_no),0) as rating
+	FROM tb_wishlist a
+	join tb_content_category b
+	on a.content_no = b.content_no
+	join tb_content c
+	on b.content_no = c.content_no
+	full outer join tb_review d
+	on d.content_no = c.content_no
+	where a.user_no = #{user_no}
+	<include refid="selectCategory" />
+	order by a.wish_date desc
+	limit #{pageSize} offset #{offset}
+  </select>
+  
+  <sql id="selectCategory">
+  	<choose>
+		<when test='categoryNo == 1'>
+			and b.category_no = 1
+		</when>
+		<when test='categoryNo == 2'>
+			and b.category_no = 2
+		</when>
+		<when test='categoryNo == 3'>
+			and b.category_no = 3
+		</when>
+		<when test='categoryNo == 4'>
+			and b.category_no = 4
+		</when>
+		<otherwise>
+		</otherwise>
+	</choose>
+  
+  </sql>  
+  
+  <select id="myWishListCnt" parameterType="SearchItem" resultType="int">
+  	select count(*)
+	from tb_wishlist a
+	join tb_content_category b
+	on a.content_no = b.content_no 
+	where a.user_no = #{user_no}
+	<include refid="selectCategory" />
+  </select>
+
+  <select id="wishSelectOneByUser" parameterType="map" resultType="int">
+	  SELECT COUNT(*) 
+	  FROM tb_wishlist 
+	  WHERE user_no = #{user_no} 
+	  AND content_no = #{content_no}
+  </select>
+  
+  <insert id="wishInsert" parameterType="map">
+	INSERT INTO tb_wishlist
+	(user_no, content_no)
+	VALUES(#{user_no}, #{content_no})  
+  </insert>
+  
+  <delete id="wishDelete" parameterType="map">
+	DELETE FROM tb_wishlist
+	WHERE user_no = #{user_no} and content_no = #{content_no} 
+  </delete>
+  
+  
+  </mapper>
