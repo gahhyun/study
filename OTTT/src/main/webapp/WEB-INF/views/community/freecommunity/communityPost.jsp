@@ -103,7 +103,7 @@
 											<a onclick="return false;" style="white-space: pre-wrap;" id="textP">${articleDTO.article_content }</a>
 										</c:when>
 										<c:otherwise>
-       										<textarea class="writeHere" rows="10"	placeholder="Write Here" id="article_content" name="article_content"   onkeydown="resize(this)" onkeyup="resize(this)" name="article_content" > ${articleDTO.article_content } </textarea>
+       										<textarea class="writeHere" rows="10"	placeholder="Write Here" id="article_content" name="article_content"   onkeydown="resize(this)" onkeyup="resize(this)" name="article_content" >${articleDTO.article_content }</textarea>
 										</c:otherwise>
 									</c:choose>
              					</div>
@@ -750,7 +750,7 @@
 				$.post(PATH+url, sendData)
 			  	.done(callbackFunction)		//ajax 호출 성공후 실행하는 함수
 			  	.fail(function(jqXHR, textStatus, errorThrown) {  // 요청이 실패한 경우 실행되는 함수
-					$(".body").html("처리중 오류가 발생하였습니다.")
+					$(".body").html("오류가 발생하였습니다.")
 	   	    		$("#commentModal").modal("show");	
 			  		console.log("요청이 실패했습니다.");
 				    console.log(jqXHR); // 실패한 XMLHttpRequest 객체에 대한 정보

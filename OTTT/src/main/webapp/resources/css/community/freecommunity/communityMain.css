@@ -255,8 +255,9 @@ header{ width: 1200px; height: 130px;box-sizing: border-box;margin: 0 auto;posit
     justify-content: space-between;
 }
 
-.usur_img{
+.user_img{
     width: 40px;
+    border-radius: 5px;
    
 }
 

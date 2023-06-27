@@ -386,14 +386,14 @@
 						createHtml += 		'<div class="post_info">';
 						if(v.writer_chk == "Y"){
 							createHtml +=			'<div style="display: flex;">';
-							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="usur_img" src="'+ v.image +'" alt="profile"></a>';
+							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="user_img" src="'+ v.image +'" alt="profile"></a>';
 							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><span class="nickname">'+ v.user_nicknm +'</span></a>';
 							createHtml +=				'<span id="current_date" >'+ formattedDate +'</span>';
 							createHtml +=			'</div>';
 							createHtml +=		'</div>'										
 						}else {
 							createHtml +=			'<div style="display: flex;">';
-							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="usur_img" src="'+ v.image +'" alt="profile"></a>';
+							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="user_img" src="'+ v.image +'" alt="profile"></a>';
 							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><span class="nickname">'+ v.user_nicknm +'</span></a>';
 							createHtml +=				'<span id="current_date" >'+ formattedDate +'</span>';
 							createHtml +=			'</div>';
@@ -401,10 +401,10 @@
 							createHtml +=				'<div>';	
 							createHtml +=					'<button type="button" class="btn_warning" data-bs-toggle="dropdown" >신고</button>';
 							createHtml +=					'<ul class="dropdown-menu" >';
-							createHtml +=						'<li><a class="dropdown-item"  onclick="fnInsertReport('+v.article_no+','+v.user_no+',1)"  >욕설/비방</a></li>';
-							createHtml +=						'<li><a class="dropdown-item"  onclick="fnInsertReport('+v.article_no+','+v.user_no+',2)"  >광고/도배</a></li>';
-							createHtml +=						'<li><a class="dropdown-item"  onclick="fnInsertReport('+v.article_no+','+v.user_no+',3)"  >악의적인 스포</a></li>';
-							createHtml +=						'<li><a class="dropdown-item"  onclick="fnInsertReport('+v.article_no+','+v.user_no+',4)"  >선정성</a></li>';
+							createHtml +=						'<li><a class="dropdown-item" style="cursor: pointer" onclick="fnInsertReport('+v.article_no+','+v.user_no+',1)"  >욕설/비방</a></li>';
+							createHtml +=						'<li><a class="dropdown-item" style="cursor: pointer" onclick="fnInsertReport('+v.article_no+','+v.user_no+',2)"  >광고/도배</a></li>';
+							createHtml +=						'<li><a class="dropdown-item" style="cursor: pointer" onclick="fnInsertReport('+v.article_no+','+v.user_no+',3)"  >악의적인 스포</a></li>';
+							createHtml +=						'<li><a class="dropdown-item" style="cursor: pointer" onclick="fnInsertReport('+v.article_no+','+v.user_no+',4)"  >선정성</a></li>';
 							createHtml +=					'</ul>';                   
 							createHtml +=				'</div>';
 							createHtml +=			'</div>';
