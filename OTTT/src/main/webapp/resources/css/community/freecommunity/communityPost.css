@@ -363,6 +363,16 @@ header{ width: 1200px; height: 130px;box-sizing: border-box;margin: 0 auto;posit
     color: #fff;
 }
 
+.fileDelete{
+    background-color: #0B0C0B;
+    color: #fff;
+    border: solid 1px;
+    border-radius: 5px;
+    position: relative;
+    top:83px;
+}
+
+
 
 .btn-primary {
     --bs-btn-color: #fff;

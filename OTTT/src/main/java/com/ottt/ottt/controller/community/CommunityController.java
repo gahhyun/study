@@ -114,7 +114,6 @@ public class CommunityController {
 			}
 			
 			ArticleDTO articleDTO = communityService.select(dto);
-			//UserDTO writer = loginUserDao.selectNo(articleDTO.getUser_no());
 
 			m.addAttribute("articleDTO", articleDTO);
 			m.addAttribute("mode", "view");

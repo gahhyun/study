@@ -11,8 +11,10 @@
 		SELECT 
 			ta.article_no			-- 게시물번호
          	, (SELECT COUNT(*) FROM tb_comment tc2 WHERE tc2.article_no = ta.article_no) as comment_count	-- 코멘트 개수
-         	, (SELECT COUNT(*) FROM tb_article_like tal2 WHERE tal2.article_no = ta.article_no) AS like_count -- 좋아요 개수
- 			, (SELECT COUNT(*) FROM tb_article_like tal3 WHERE tal3.article_no = ta.article_no AND tal3.user_no = #{user_no} ) AS check_like_count -- 내가 눌렀는지 확인
+         	, (SELECT COUNT(*) FROM tb_article_like tal2 
+         		WHERE tal2.article_no = ta.article_no) AS like_count -- 좋아요 개수
+ 			, (SELECT COUNT(*) FROM tb_article_like tal3 
+ 				WHERE tal3.article_no = ta.article_no AND tal3.user_no = #{user_no} ) AS check_like_count -- 내가 눌렀는지 확인
 			, ta.user_no					-- 유저번호
 			, ta.article_index_no			-- 게시판구분
 			, ta.article_content			-- 게시판 내용
@@ -41,8 +43,10 @@
 			, tc.article_no as comment_article_no 			-- 코맨드 작성한 게시물번호
 			, tal.article_no as like_article_no 			-- 좋아요 누른 게시물번호
          	, (SELECT COUNT(*) FROM tb_comment tc2 WHERE tc2.article_no = ta.article_no) as comment_count	-- 코멘트 개수
-         	, (SELECT COUNT(*) FROM tb_article_like tal2 WHERE tal2.article_no = ta.article_no) AS like_count -- 좋아요 개수
-         	, (SELECT COUNT(*) FROM tb_article_like tal3 WHERE tal3.article_no = ta.article_no AND tal3.user_no = #{user_no} ) AS check_like_count -- 내가 눌렀는지 확인
+         	, (SELECT COUNT(*) FROM tb_article_like tal2 
+         		WHERE tal2.article_no = ta.article_no) AS like_count -- 좋아요 개수
+         	, (SELECT COUNT(*) FROM tb_article_like tal3 
+         		WHERE tal3.article_no = ta.article_no AND tal3.user_no = #{user_no} ) AS check_like_count -- 내가 눌렀는지 확인
 			, tu.user_no							-- 유저번호
 			, ta.article_index_no					-- 게시판구분
 			, ta.article_content					-- 게시판 내용
@@ -52,8 +56,8 @@
 			, ta.article_mod_dt						-- 수정일
 			-- , to_char(ta.article_create_dt,'YYYY-MM-DD') AS article_create_dt	-- 등록일
 			-- , to_char(ta.article_mod_dt,'YYYY-MM-DD') AS article_create_dt	-- 수정일
-			, tu.user_nicknm				-- 사용자 닉네임
-			, tu.image						-- 사용자 프로필사진
+			, tu.user_nicknm						-- 사용자 닉네임
+			, tu.image								-- 사용자 프로필사진
 			, CASE	
 			    WHEN ta.user_no = #{user_no} THEN 'Y'
 			    ELSE 'N'
@@ -79,7 +83,7 @@
 			AND tal.user_no = #{user_no}
 		</if>
 		
-		<if test="category != null and category == 'myComment'	">		<!-- 댓글 작성 게시글 -->
+		<if test="category != null and category == 'myComment'	">		    <!-- 댓글 작성 게시글 -->
 			/*댓글 작성 게시글*/
 			AND tc.article_no NOTNULL 
 			AND tc.user_no = #{user_no}
@@ -87,7 +91,7 @@
 		
 
 
-		<if test="schText != null and schText != '' ">				<!-- 검색어로 조회 -->
+		<if test="schText != null and schText != '' ">				        <!-- 검색어로 조회 -->
 			/*게시물내용 검색*/
 			AND ta.article_content LIKE CONCAT('%', #{schText}, '%')
 		</if>

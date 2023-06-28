@@ -76,20 +76,27 @@
            				<input type="hidden" name="article_no" id="article_no" value="${articleDTO.article_no}">
            				<div class="pro-dan">
                				<div>
-               					<a href="#"><img class="profile" src="${articleDTO.image }" alt="profile" ></a>
-                 				<a class="nickname" href="../ottt박소율/mypageshow.html">${articleDTO.user_nicknm }</a>
+               					<a href="javascript:goProfile('${articleDTO.user_no}','${articleDTO.user_nicknm}')"><img class="profile" src="${articleDTO.image }" alt="profile" ></a>
+                 				<a class="nickname" href="javascript:goProfile('${articleDTO.user_no}','${articleDTO.user_nicknm}')">${articleDTO.user_nicknm }</a>
                				</div>
-               				<div class="btn_warning_div">
-				                    <button type="button" class="btn_warning2" data-bs-toggle="dropdown" aria-expanded="false">
-				                     신고
-				                    </button>
-				                    <ul class="dropdown-menu">
-				                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',1)"  >비방/욕설</a></li>
-				                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',2)"  >광고/도배</a></li>
-				                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',3)"  >악의적인 스포</a></li>
-				                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',4)"  >선정성</a></li>
-				                    </ul>
-				                </div>
+               				<c:choose>
+								<c:when test="${articleDTO.user_no == sessionScope.user_no}">		
+
+								</c:when>
+								<c:otherwise>
+	       							<div class="btn_warning_div">
+					                    <button type="button" class="btn_warning2" data-bs-toggle="dropdown" aria-expanded="false">
+					                     신고
+					                    </button>
+					                    <ul class="dropdown-menu">
+					                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',1)"  >비방/욕설</a></li>
+					                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',2)"  >광고/도배</a></li>
+					                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',3)"  >악의적인 스포</a></li>
+					                      <li><a class="dropdown-item" href="#" onclick="fnInsertReport2('${articleDTO.article_no}','${articleDTO.user_no}',4)"  >선정성</a></li>
+					                    </ul>
+					                </div>
+								</c:otherwise>
+							</c:choose>
                			</div>
            				<div class="wirted">
          					<!-- 입력 폼 -->
@@ -103,7 +110,7 @@
 											<a onclick="return false;" style="white-space: pre-wrap;" id="textP">${articleDTO.article_content }</a>
 										</c:when>
 										<c:otherwise>
-       										<textarea class="writeHere" rows="10"	placeholder="Write Here" id="article_content" name="article_content"   onkeydown="resize(this)" onkeyup="resize(this)" name="article_content" >${articleDTO.article_content }</textarea>
+       										<textarea autofocus="autofocus" class="writeHere" placeholder="Write Here" id="article_content" name="article_content" oninput="resize(this)" name="article_content" >${articleDTO.article_content }</textarea>
 										</c:otherwise>
 									</c:choose>
              					</div>
@@ -113,7 +120,7 @@
 										<c:if test="${articleDTO.article_image != null}">
 											<div class="container">
 			                					<img class="poster" src="data:image/png;base64,${articleDTO.article_image}" alt="poster" style="border-radius: 10px;">		
-			                				</div>
+			                				</div>   				
 										</c:if>
 									</c:when>
 									<c:otherwise>
@@ -130,7 +137,7 @@
 			                  				</c:otherwise>
 										</c:choose>
 										<div>
-											<button type="button" onclick="javascript:fnFileDelete('Y');">이미지 삭제</button>
+											<button class="fileDelete" type="button" onclick="javascript:fnFileDelete('Y');">이미지 삭제</button>
 										</div>
 										<div>
 											<div class="inImg">
@@ -241,8 +248,8 @@
 						<c:choose>
 							<c:when test="${not empty sessionScope.user_no}">
 								<li class="comment_write" id="commentCard">
-				       				<a href="#"><img class="profile" src="${userDTO.image }" alt="profile"/> </a>
-				                	<a class="nickname" href="#">${sessionScope.user_nicknm}</a>
+				       				<a onclick="return false;" ><img class="profile" src="${userDTO.image }" alt="profile"/> </a>
+				                	<a onclick="return false;" class="nickname" >${sessionScope.user_nicknm}</a>
 				                	<div>
 			                			<textarea class="writeHere" name="cmt_content" placeholder="Write Here" onkeydown="resize(this)" onkeyup="resize(this)" ></textarea>
 			                			<input class="btn_commit" onclick="javascript:fnInsertComment();" type="image" src="${path}/resources/images/img/commit.png" alt="commit">
@@ -388,6 +395,33 @@
 				question
 	     	*/
 	     	
+	     	function goProfile(user_no, user_nicknm) {
+				let form = document.createElement('form');				
+				
+				let data = {
+						user_no : user_no,
+						toURL : path
+		        };
+				
+				for (let key in data) {
+			        if (data.hasOwnProperty(key)) {
+			            let obj = document.createElement('input');
+			            obj.setAttribute('type', 'hidden');
+			            obj.setAttribute('name', key);
+			            obj.setAttribute('value', data[key]);
+			            form.appendChild(obj);
+			        }
+			    }
+				
+				form.setAttribute('method','post');
+				form.setAttribute('action','/ottt/profile?user=' +user_nicknm);
+								
+				document.body.appendChild(form);
+				form.submit();				
+			}
+	     	
+	     	
+	     	
 	     	function post_delete(){
 	   			//폼서브밋 방식으로 삭제요청
 				if(LOGIN_YN == null || LOGIN_YN == ""){
@@ -512,6 +546,7 @@
    		}
 	   		
    		/********************************************************************************/
+   		/* 게시글 프로필, 닉네임 클릭시 프로필 페이지로 이동  */
 		function goProfile(user_no, user_nicknm) {
 			let form = document.createElement('form');				
 			
@@ -543,7 +578,7 @@
 			
 			
 
-			/* ============================================================
+			/* ====================================================================================================================================================================================
 			* 	댓글 기능 스크립트
 			* ============================================================ */
 			
@@ -562,6 +597,8 @@
 				console.log(response);
 
 				let list = response;
+				
+				list = list.reverse();
 				
 				//댓글목록 초기화
 				$("#commentCard").nextAll().remove();
@@ -623,7 +660,7 @@
 					});
 					$("#commentCard").after(createHtml);
 				}else {
-					$("#commentCard").after("<li>등록된 댓글이 없습니다. </li>");
+					$("#commentCard").after("");
 				}
 			}
 			
@@ -732,6 +769,7 @@
 				if(response.result > 0){
 					$(".body").html(response.message);
 		   	    	$("#commentModal").modal("show");
+		   	    	//댓글 내용부분을 먼저 초기화 시켜준다
 					$("textarea[name=cmt_content]").val("");
 					fnGetCommentList();
 				}else {
@@ -763,35 +801,37 @@
 	         *   날짜 계산(몇일전, 몇시간전, 몇분전)
 	         *   @param dateValue{String} 날짜
 	         */
-         	function fnTimeForToday(dateValue) {
-	            
-	            const today = new Date();
-	            const timeValue = new Date(dateValue);
+	         function fnTimeForToday(dateValue) {
+	        	    const today = new Date();
+	        	    const timeValue = new Date(dateValue);
 
-	            const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
-	              
-	              if (betweenTime < 1) {
-	                 return '방금전';
-	              }
-	             
-	              if (betweenTime < 60) {
-	                  return betweenTime+"분전";
-	              }
+	        	    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
 
-	              var betweenTimeHour = Math.floor(betweenTime / 60);
-	              
-	              if (betweenTimeHour < 24) {
-	                  return betweenTimeHour+"시간전";
-	              }
+	        	    if (betweenTime < 1) {
+	        	        return '방금 전';
+	        	    }
 
-	              var betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-	              
-	              if (betweenTimeDay < 365) {
-	                  return betweenTimeDay+"일전";
-	              }
+	        	    if (betweenTime < 60) {
+	        	        return betweenTime + '분 전';
+	        	    }
 
-	              return Math.floor(betweenTimeDay / 365)+"년전";
-       		}
+	        	    const betweenTimeHour = Math.floor(betweenTime / 60);
+
+	        	    if (betweenTimeHour < 24) {
+	        	        return betweenTimeHour + '시간 전';
+	        	    }
+
+	        	    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+
+	        	    if (betweenTimeDay < 7) {
+	        	        return betweenTimeDay + '일 전';
+	        	    }
+
+	        	    const year = timeValue.getFullYear();
+	        	    const month = String(timeValue.getMonth() + 1).padStart(2, '0');
+	        	    const day = String(timeValue.getDate()).padStart(2, '0');
+	        	    return year + '-' + month + '-' + day;
+	        	}
 
 	         
 	   		/*********************************************************************************************************************
