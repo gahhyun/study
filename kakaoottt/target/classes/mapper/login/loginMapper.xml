@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ottt.ottt.dao.login.LoginMapper">
+  
+  	<select id="select" parameterType="String" resultType="UserDTO" >
+  		select * from tb_user where user_id = #{id}
+  	</select>
+  	
+	<select id="selectNo" parameterType="int" resultType="UserDTO">
+      select * from tb_user where user_no = #{user_no}
+	</select>
+	
+	<select id="selectNickname" parameterType="string" resultType="UserDTO" >
+		select * from tb_user where user_nicknm = #{user_nicknm}
+	</select>  	
+  	
+  	<!-- 카카오 가입여부 -->
+	<select id="selectKakao" parameterType="string" resultType="UserDTO" >
+		/*com.ottt.ottt.dao.login.LoginMapper.selectKakao 카카오 등록여부 조회*/
+		select * from tb_user where kakao_no = #{kakao_no}
+	</select>  
+  	
+  	<insert id="insert" parameterType="UserDTO" >
+  		INSERT INTO tb_user
+		(
+			user_id
+			, user_pwd
+			, user_nm
+			, user_nicknm
+			, user_gen
+			, user_email
+			, reg_date
+			, kakao_no
+		)
+		VALUES(
+			#{user_id}
+			, #{user_pwd}
+			, #{user_nm}
+			, #{user_nicknm}
+			, #{user_gen}
+			, #{user_email}
+			, now()
+			, #{kakao_no}
+		)
+  	</insert>
+  	
+  	
+
+  	
+  	
+  </mapper>
